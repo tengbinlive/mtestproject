@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <EditText
+        android:id="@+id/search_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/search_margin"
+        android:background="@drawable/circle_corners_bg"
+        android:gravity="center"
+        android:imeOptions="actionSearch"
+        android:lines="1"
+        android:padding="@dimen/search_padding"
+        android:tag="search input text"
+        android:textCursorDrawable="@null"
+        android:textSize="@dimen/search_text_size" />
+
+
+    <TextView
+        android:id="@+id/search_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="@dimen/search_margin"
+        android:gravity="center"
+        android:lines="1"
+        android:tag="search title"
+        android:text="@string/search"
+        android:textSize="@dimen/search_text_size" />
+
+    <ImageView
+        android:id="@+id/search_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/search_title"
+        android:src="@mipmap/search_icon"
+        android:tag="search icon" />
+
+
+</RelativeLayout>
