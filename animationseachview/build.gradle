@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.jfrog.bintray'
 
 android {
     compileSdkVersion 23
@@ -7,8 +8,12 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0.0"
+        versionCode 3
+        versionName PROJ_VERSION
+    }
+
+    lintOptions {
+        abortOnError false
     }
 
     buildTypes {
@@ -25,31 +30,5 @@ dependencies {
 
 }
 
+apply from: 'bintray.gradle'
 
-ext {
-    bintrayRepo = 'maven'////bintray上的仓库名，一般为maven
-    bintrayName = 'animationseachview'//bintray上的项目名
-
-    publishedGroupId = 'com.bin'//JCenter的GroupId
-    artifact = 'animationseachview'//JCenter的ArtifactId
-
-    siteUrl = 'https://github.com/tengbinlive/animation_seachview'
-    gitUrl = 'https://github.com/tengbinlive/animation_seachview.git'
-
-    libraryVersion = '1.0.0'//版本号
-    libraryName = 'animationseachview'//项目名字，没什么用
-    libraryDescription = 'Android SeachView Animation'//项目描述，没什么用
-
-    //开发者信息
-    developerId = 'tengbinlive'
-    developerName = 'tengbin'
-    developerEmail = 'tengbinlive@gmail.com'
-
-    //以上所有信息自行修改，以下不变
-
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
-}
-apply from:'https://cdn.rawgit.com/Jude95/JCenter/master/install.gradle'
-apply from:'https://cdn.rawgit.com/Jude95/JCenter/master/bintray.gradle'

@@ -131,9 +131,9 @@ public class AnimationSearchView extends RelativeLayout {
     /**
      * 搜索框添加内容改变监听事件
      *
-     * @param watcher
+     * @param watcher 输入框内容监听事件
      */
-    public void addTextChangedListener(TextWatcher watcher) {
+    public void addTextChangedListener(TextWatcherAdapter watcher) {
         searchEt.addTextChangedListener(watcher);
     }
 
