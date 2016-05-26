@@ -28,16 +28,16 @@ dependencies {
 
 ext {
     bintrayRepo = 'maven'////bintray上的仓库名，一般为maven
-    bintrayName = 'AnimationSeachView'//bintray上的项目名
+    bintrayName = 'animationseachview'//bintray上的项目名
 
     publishedGroupId = 'com.bin'//JCenter的GroupId
-    artifact = 'AnimationSeachView'//JCenter的ArtifactId
+    artifact = 'animationseachview'//JCenter的ArtifactId
 
     siteUrl = 'https://github.com/tengbinlive/animation_seachview'
     gitUrl = 'https://github.com/tengbinlive/animation_seachview.git'
 
     libraryVersion = '1.0.0'//版本号
-    libraryName = 'AnimationSeachView'//项目名字，没什么用
+    libraryName = 'animationseachview'//项目名字，没什么用
     libraryDescription = 'Android SeachView Animation'//项目描述，没什么用
 
     //开发者信息
