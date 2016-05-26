@@ -8,7 +8,7 @@
 
 ![](https://github.com/tengbinlive/animation_seachview/blob/master/images/demo.gif) 
 
-### gradle
+#### gradle
 
     dependencies {
 
@@ -16,7 +16,7 @@
 
     }
 
-### maven
+#### maven
 
     <dependency>
       <groupId>com.bin</groupId>
@@ -25,7 +25,7 @@
       <type>pom</type>
     </dependency>
 
-### xml
+#### xml
 
     <com.bin.AnimationSearchView
             android:id="@+id/searchView"
@@ -33,8 +33,6 @@
             android:layout_margin="@dimen/search_margin"
             android:layout_height="match_parent" />
 
-
-### code
 
 #### 如果需要监听输入框内容
 
