@@ -8,5 +8,5 @@
 
 ![animationseachview](https://github.com/tengbinlive/mtestproject/blob/master/images/demo.gif) 
 
-#### .[animationseachview](https://github.com/tengbinlive/mtestproject/blob/master/README_ANIMATIONSEACHVIEW.md) 
+#### .[animationseachview - readme](https://github.com/tengbinlive/mtestproject/blob/master/README_ANIMATIONSEACHVIEW.md) 
 
