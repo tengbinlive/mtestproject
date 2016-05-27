@@ -3,53 +3,10 @@
 [download  apk](http://fir.im/mu6c)
 
 
-![download](https://github.com/tengbinlive/animation_seachview/blob/master/images/download.png)
+![download](https://github.com/tengbinlive/mtestproject/blob/master/images/download.png)
 
 
-![](https://github.com/tengbinlive/animation_seachview/blob/master/images/demo.gif) 
+![](https://github.com/tengbinlive/mtestproject/blob/master/images/demo.gif) 
 
-#### gradle
+#### ![animationseachview](https://github.com/tengbinlive/mtestproject/blob/master/README_ANIMATIONSEACHVIEW.md) 
 
-    dependencies {
-
-          compile 'com.bin:animationseachview:1.0.4'
-
-    }
-
-#### maven
-
-    <dependency>
-      <groupId>com.bin</groupId>
-      <artifactId>animationseachview</artifactId>
-      <version>1.0.2</version>
-      <type>pom</type>
-    </dependency>
-
-#### xml
-
-    <com.bin.AnimationSearchView
-            android:id="@+id/searchView"
-            android:layout_width="match_parent"
-            android:layout_margin="@dimen/search_margin"
-            android:layout_height="match_parent" />
-
-
-#### 监听输入框内容
-
-    searchView.addTextChangedListener(new TextWatcherAdapter(){
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    super.onTextChanged(s, start, before, count);
-                }
-            });
-
-#### 返回键关闭动画
-
-    @Override
-        public void onBackPressed() {
-            if (searchView.isAnimationOpen()) {
-                searchView.closeAnimation();
-                return;
-            }
-            super.onBackPressed();
-        }

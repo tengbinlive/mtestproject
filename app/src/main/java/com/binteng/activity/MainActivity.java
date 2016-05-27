@@ -1,4 +1,4 @@
-package com.bin.activity;
+package com.binteng.activity;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -8,9 +8,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.bin.R;
-import com.bin.adapter.ActivityListAdapter;
+import com.binteng.R;
+import com.binteng.adapter.ActivityListAdapter;
+import com.binteng.bean.ActInfo;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -49,7 +53,7 @@ public class MainActivity extends AbsActivity {
 
         final ActivityInfo[] data = info == null ? null : info.activities;
 
-        final ActivityListAdapter adapter = new ActivityListAdapter(this, data);
+        final ActivityListAdapter adapter = new ActivityListAdapter(this, initActInfoData(data));
 
         SwingBottomInAnimationAdapter animationAdapter = new SwingBottomInAnimationAdapter(adapter);
 
@@ -65,8 +69,27 @@ public class MainActivity extends AbsActivity {
         });
     }
 
-    private void toActivity(ActivityInfo info) {
-        Intent intent = new Intent(this, info.getClass());
+    private List initActInfoData(ActivityInfo[] data) {
+        if (data == null) {
+            return null;
+        }
+        List list = new ArrayList<>();
+        for (ActivityInfo activityInfo : data) {
+            String name = activityInfo.name;
+            if (!name.contains("MainActivity")) {
+                ActInfo actInfo = new ActInfo();
+                actInfo.setClassName(name);
+                String activityName = name.substring(name.lastIndexOf(".") + 1, name.length());
+                actInfo.setActivityName(activityName);
+                list.add(actInfo);
+            }
+        }
+        return list;
+    }
+
+    private void toActivity(ActInfo info) {
+        Intent intent = new Intent();
+        intent.setClassName(this, info.getClassName());
         startActivity(intent);
     }
 

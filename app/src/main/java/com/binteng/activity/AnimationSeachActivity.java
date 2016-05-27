@@ -1,7 +1,7 @@
-package com.bin.activity;
+package com.binteng.activity;
 
 import com.bin.AnimationSearchView;
-import com.bin.R;
+import com.binteng.R;
 import com.bin.TextWatcherAdapter;
 
 import butterknife.BindView;

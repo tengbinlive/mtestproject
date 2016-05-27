@@ -8,7 +8,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_16"
+        android:background="@color/colorAccent"
         android:gravity="center"
+        android:elevation="@dimen/elevation"
+        android:textColor="@android:color/white"
         android:padding="@dimen/padding_16"
         android:text="activity name" />
 

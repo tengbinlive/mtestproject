@@ -1,4 +1,4 @@
-package com.bin.activity;
+package com.binteng.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +22,7 @@ public abstract class AbsActivity extends AppCompatActivity {
         rootView = LayoutInflater.from(this).inflate(getLayoutID(), (ViewGroup) getWindow().getDecorView(), false);
         setContentView(rootView);
         ButterKnife.bind(this);
+        getSupportActionBar().setTitle(this.getLocalClassName());
         initData();
     }
 

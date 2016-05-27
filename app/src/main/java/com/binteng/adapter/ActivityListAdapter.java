@@ -1,14 +1,14 @@
-package com.bin.adapter;
+package com.binteng.adapter;
 
 import android.app.Activity;
-import android.content.pm.ActivityInfo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.bin.R;
+import com.binteng.R;
+import com.binteng.bean.ActInfo;
 
 import java.util.List;
 
@@ -19,22 +19,22 @@ public class ActivityListAdapter extends BaseAdapter {
 
     private LayoutInflater mInflater;
 
-    private ActivityInfo[] dataList;
+    private List<ActInfo> dataList;
 
 
-    public ActivityListAdapter(Activity context, ActivityInfo[] _list) {
+    public ActivityListAdapter(Activity context, List _list) {
         this.dataList = _list;
         mInflater = LayoutInflater.from(context);
     }
 
     @Override
     public int getCount() {
-        return null == dataList ? 0 : dataList.length;
+        return null == dataList ? 0 : dataList.size();
     }
 
     @Override
-    public ActivityInfo getItem(int position) {
-        return dataList[position];
+    public ActInfo getItem(int position) {
+        return dataList.get(position);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ActivityListAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.activityName.setText(dataList[position].name);
+        holder.activityName.setText(dataList.get(position).getActivityName());
 
         return convertView;
     }

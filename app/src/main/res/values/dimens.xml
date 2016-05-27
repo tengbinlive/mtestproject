@@ -5,5 +5,6 @@
 
     <dimen name="margin_16">16dp</dimen>
     <dimen name="padding_16">16dp</dimen>
+    <dimen name="elevation">3dp</dimen>
 
 </resources>
