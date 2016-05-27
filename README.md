@@ -6,7 +6,7 @@
 ![download](https://github.com/tengbinlive/mtestproject/blob/master/images/download.png)
 
 
-![](https://github.com/tengbinlive/mtestproject/blob/master/images/demo.gif) 
+![animationseachview](https://github.com/tengbinlive/mtestproject/blob/master/images/demo.gif) 
 
 #### [animationseachview](https://github.com/tengbinlive/mtestproject/blob/master/README_ANIMATIONSEACHVIEW.md) 
 
