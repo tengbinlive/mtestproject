@@ -1,4 +1,4 @@
-package com.example.bin.meditviewanimation;
+package com.example.bin.activity;
 
 import org.junit.Test;
 
