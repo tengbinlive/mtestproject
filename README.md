@@ -12,7 +12,7 @@
 
     dependencies {
 
-          compile 'com.bin:animationseachview:1.0.2'
+          compile 'com.bin:animationseachview:1.0.3'
 
     }
 
@@ -34,7 +34,7 @@
             android:layout_height="match_parent" />
 
 
-#### 如果需要监听输入框内容
+#### 监听输入框内容
 
     searchView.addTextChangedListener(new TextWatcherAdapter(){
                 @Override
@@ -43,7 +43,7 @@
                 }
             });
 
-#### 如果需要返回键关闭动画
+#### 返回键关闭动画
 
     @Override
         public void onBackPressed() {
