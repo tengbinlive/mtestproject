@@ -12,7 +12,7 @@
 
     dependencies {
 
-          compile 'com.bin:animationseachview:1.0.3'
+          compile 'com.bin:animationseachview:1.0.4'
 
     }
 

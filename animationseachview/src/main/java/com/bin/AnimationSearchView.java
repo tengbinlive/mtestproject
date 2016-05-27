@@ -1,7 +1,6 @@
 package com.bin;
 
 import android.content.Context;
-import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -116,7 +115,17 @@ public class AnimationSearchView extends RelativeLayout {
      * @param res_color colors 资源id
      */
     public void setSearchTitleColor(int res_color) {
+
         searchTitle.setTextColor(res_color);
+    }
+
+    /**
+     * 搜索框显示内容字体颜色
+     *
+     * @param res_color colors 资源id
+     */
+    public void setSearchContentColor(int res_color) {
+        searchEt.setTextColor(res_color);
     }
 
     /**
@@ -232,7 +241,7 @@ public class AnimationSearchView extends RelativeLayout {
     private Animator aniSearchIcon(final boolean is) {
         //只记录一次
         if (iconOfferY <= 0) {
-            iconOfferY = (searchEt.getWidth()>>1);
+            iconOfferY = (searchEt.getWidth() >> 1);
         }
         return createTranslationXAni(searchIcon, iconDuration, is ? iconOfferY : 0);
     }
