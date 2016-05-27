@@ -1,4 +1,4 @@
-# animation_seachview
+# my test library
 
 [download  apk](http://fir.im/mu6c)
 
@@ -8,5 +8,5 @@
 
 ![animationseachview](https://github.com/tengbinlive/mtestproject/blob/master/images/demo.gif) 
 
-#### [animationseachview](https://github.com/tengbinlive/mtestproject/blob/master/README_ANIMATIONSEACHVIEW.md) 
+#### .[animationseachview](https://github.com/tengbinlive/mtestproject/blob/master/README_ANIMATIONSEACHVIEW.md) 
 
