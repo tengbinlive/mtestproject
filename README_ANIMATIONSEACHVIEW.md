@@ -1,11 +1,5 @@
 # animation_seachview
 
-[download  apk](http://fir.im/mu6c)
-
-
-![download](https://github.com/tengbinlive/mtestproject/blob/master/images/download.png)
-
-
 ![](https://github.com/tengbinlive/mtestproject/blob/master/images/demo.gif) 
 
 #### gradle
