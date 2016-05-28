@@ -73,3 +73,4 @@
     或是
     
     searchView.setSearchContentBackgroundColor(R.drawable.bg);
+
