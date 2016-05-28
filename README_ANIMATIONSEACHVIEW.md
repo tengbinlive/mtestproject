@@ -48,7 +48,7 @@
             super.onBackPressed();
         }
         
-#### 修改search 背景 
+#### 修改search背景 
 
     添加 search_content_bg.xml
     
