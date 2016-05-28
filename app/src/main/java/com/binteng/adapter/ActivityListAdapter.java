@@ -22,7 +22,7 @@ public class ActivityListAdapter extends BaseAdapter {
     private List<ActInfo> dataList;
 
 
-    public ActivityListAdapter(Activity context, List _list) {
+    public ActivityListAdapter(Activity context, List<ActInfo> _list) {
         this.dataList = _list;
         mInflater = LayoutInflater.from(context);
     }

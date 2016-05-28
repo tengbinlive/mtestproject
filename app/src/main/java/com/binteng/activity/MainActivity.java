@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.binteng.AbsActivity;
 import com.binteng.R;
 import com.binteng.adapter.ActivityListAdapter;
 import com.binteng.bean.ActInfo;

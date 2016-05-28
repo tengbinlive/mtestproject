@@ -1,6 +1,6 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="search_animation_size">8dp</dimen>
+    <dimen name="search_animation_offer">8dp</dimen>
     <dimen name="search_margin">10dp</dimen>
     <dimen name="search_padding">10dp</dimen>
     <dimen name="search_text_size">14sp</dimen>

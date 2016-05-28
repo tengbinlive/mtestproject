@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="@drawable/circle_corners_bg"
+        android:background="@drawable/search_content_bg"
         android:gravity="center"
         android:imeOptions="actionSearch"
         android:lines="1"

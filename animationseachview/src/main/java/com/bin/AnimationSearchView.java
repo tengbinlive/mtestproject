@@ -52,7 +52,7 @@ public class AnimationSearchView extends RelativeLayout {
      * 初始化 默认数据
      */
     private void initData() {
-        EDITEXT_OFFER = getResources().getDimension(R.dimen.search_animation_size);
+        EDITEXT_OFFER = getResources().getDimension(R.dimen.search_animation_offer);
     }
 
     /**
@@ -126,6 +126,16 @@ public class AnimationSearchView extends RelativeLayout {
      */
     public void setSearchContentColor(int res_color) {
         searchEt.setTextColor(res_color);
+    }
+
+
+    /**
+     * 搜索框背景
+     *
+     * @param res_drawable drawable 资源id
+     */
+    public void setSearchContentBackgroundColor(int res_drawable) {
+        searchEt.setBackgroundResource(res_drawable);
     }
 
     /**

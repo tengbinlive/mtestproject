@@ -53,3 +53,23 @@
             }
             super.onBackPressed();
         }
+        
+#### 修改search 背景 
+
+    添加 search_content_bg.xml
+    
+    <?xml version="1.0" encoding="utf-8"?>
+    <shape xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+        <solid android:color="#FFFFFF" />
+        <corners
+            android:bottomLeftRadius="8dp"
+            android:bottomRightRadius="8dp"
+            android:topLeftRadius="8dp"
+            android:topRightRadius="8dp" />
+    
+    </shape>
+    
+    或是
+    
+    searchView.setSearchContentBackgroundColor(R.drawable.bg);

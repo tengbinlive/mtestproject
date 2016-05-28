@@ -15,8 +15,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:src="@mipmap/point_red" />
+        android:src="@mipmap/point_red"
+        android:contentDescription="point" />
 
-    <include layout="@layout/launch_view" />
+    <include layout="@layout/layout_content_view" />
 
 </RelativeLayout>

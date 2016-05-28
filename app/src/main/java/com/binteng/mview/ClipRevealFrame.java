@@ -1,4 +1,4 @@
-package com.binteng.activity;
+package com.binteng.mview;
 
 import android.content.Context;
 import android.graphics.Canvas;

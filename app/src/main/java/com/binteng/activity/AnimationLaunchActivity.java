@@ -2,22 +2,18 @@ package com.binteng.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.graphics.PointF;
 import android.os.Build;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewAnimationUtils;
-import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.OvershootInterpolator;
+import android.view.animation.BounceInterpolator;
 import android.widget.ImageView;
 
 import com.bin.AnimatorUtils;
+import com.binteng.AbsActivity;
 import com.binteng.R;
-import com.nineoldandroids.animation.AnimatorSet;
+import com.binteng.mview.ClipRevealFrame;
 import com.nineoldandroids.animation.ObjectAnimator;
-import com.nineoldandroids.animation.TypeEvaluator;
-import com.nineoldandroids.animation.ValueAnimator;
 
 import butterknife.BindView;
 
@@ -28,70 +24,71 @@ public class AnimationLaunchActivity extends AbsActivity {
     @BindView(R.id.clip_reveal_frame)
     ClipRevealFrame clipRevealFrame;
 
-    private final OvershootInterpolator mInterpolator = new OvershootInterpolator();
+    private final BounceInterpolator interpolatorBounce = new BounceInterpolator();
     private boolean isShow;
+    private ObjectAnimator startAni;
+
+    private final static int ANIMATION_CLIPREVEAL_TIME = 500;   //内容view 显示动画 duration 时长
+    private final static int ANIMATION_TRANSLATION_DURATION = 2 * 1000; //移动动画 duration 时长
+    private final static int OFFER_X = 700;// x轴移动偏移量
+
+
+    //内容动画结束监听回调
+    private OnAnimationEnd animationEnd;
+
+    interface OnAnimationEnd {
+
+        void onAnimationEnd();
+    }
 
     @Override
     public void initData() {
         super.initData();
+        getRootView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                togglePointAni();
+            }
+        });
         initAnimation();
     }
 
-    private void initAnimation() {
-
-        int tanslationX_time = 5*1000;
-        int tanslationY_count = 2;
-        int tanslationY_time = tanslationX_time/tanslationY_count;
-
-        int tanslationY_offer = -50;
-
-        WindowManager manager = this.getWindowManager();
-        DisplayMetrics outMetrics = new DisplayMetrics();
-        manager.getDefaultDisplay().getMetrics(outMetrics);
-        int width = outMetrics.widthPixels >> 1;
-
-        final ObjectAnimator tanslationX = ObjectAnimator.ofFloat(point, AnimatorUtils.TRANSLATION_X, 0, width);
-        tanslationX.setDuration(tanslationX_time);
-
-        final ObjectAnimator tanslationY = ObjectAnimator.ofFloat(point, AnimatorUtils.TRANSLATION_Y, 0 ,tanslationY_offer,0);
-        tanslationY.setDuration(700);
-        tanslationY.setRepeatCount(tanslationY_count);
-        tanslationY.setRepeatMode(ValueAnimator.REVERSE);
-
-        final ObjectAnimator endAnimation = ObjectAnimator.ofFloat(point, AnimatorUtils.TRANSLATION_Y, tanslationY_offer, tanslationY_offer*4);
-        endAnimation.setDuration(1000);
-        endAnimation.setInterpolator(mInterpolator);
-        endAnimation.addListener(new com.nineoldandroids.animation.AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(com.nineoldandroids.animation.Animator animation) {
-                super.onAnimationEnd(animation);
-                toggleShowSetting(point);
-            }
-        });
-
-//        AnimatorSet set = new AnimatorSet();
-//        set.playTogether(tanslationX,tanslationY);
-//        set.addListener(new com.nineoldandroids.animation.AnimatorListenerAdapter() {
-//            @Override
-//            public void onAnimationEnd(com.nineoldandroids.animation.Animator animation) {
-//                super.onAnimationEnd(animation);
-//                endAnimation.start();
-//            }
-//        });
-//        set.start();
-        AnimatorSet set = new AnimatorSet();
-        set.playTogether(
-                ObjectAnimator.ofFloat(point, "rotationX", 0, 360),
-                ObjectAnimator.ofFloat(point, "rotationY", 0, 180),
-                ObjectAnimator.ofFloat(point, "rotation", 0, -90),
-                ObjectAnimator.ofFloat(point, "translationX", 0, 90),
-                ObjectAnimator.ofFloat(point, "translationY", 0, 90),
-                ObjectAnimator.ofFloat(point, "scaleX", 1, 1.5f),
-                ObjectAnimator.ofFloat(point, "scaleY", 1, 0.5f),
-                ObjectAnimator.ofFloat(point, "alpha", 1, 0.25f, 1)
-        );
-        set.setDuration(5 * 1000).start();
+    private void togglePointAni() {
+        if (!isShow) {
+            startAni.start();
+        } else {
+            toggleShowContent(point);
+        }
     }
+
+    private void initAnimation() {
+        startAni = createAnimation(point, true);
+        createAnimation(point, false);
+    }
+
+    private ObjectAnimator createAnimation(View view, boolean is) {
+        final ObjectAnimator animator = ObjectAnimator.ofFloat(view, AnimatorUtils.TRANSLATION_X, is ? 0 : OFFER_X, is ? OFFER_X : 0);
+        animator.setDuration(ANIMATION_TRANSLATION_DURATION);
+        animator.setInterpolator(interpolatorBounce);
+        if (is) {
+            animator.addListener(new com.nineoldandroids.animation.AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(com.nineoldandroids.animation.Animator animation) {
+                    super.onAnimationEnd(animation);
+                    toggleShowContent(point);
+                }
+            });
+        } else {
+            animationEnd = new OnAnimationEnd() {
+                @Override
+                public void onAnimationEnd() {
+                    animator.start();
+                }
+            };
+        }
+        return animator;
+    }
+
 
     @Override
     public int getLayoutID() {
@@ -99,9 +96,9 @@ public class AnimationLaunchActivity extends AbsActivity {
     }
 
     /**
-     * 切换约定界面
+     * 切换内容view
      */
-    public void toggleShowSetting(View v) {
+    public void toggleShowContent(View v) {
         int viewWidth = 0;
         int viewHeight = 0;
         int viewX = 0;
@@ -112,8 +109,8 @@ public class AnimationLaunchActivity extends AbsActivity {
             viewX = (int) v.getX();
             viewY = (int) v.getY();
         }
-        int x = viewX-(viewWidth>>1);
-        int y = viewY-(viewHeight>>1);
+        int x = viewX - (viewWidth >> 1);
+        int y = viewY - (viewHeight >> 1);
 
         float radiusOf = 0.5f * viewWidth / 2f;
         float radiusFromToRoot = (float) Math.hypot(
@@ -121,42 +118,43 @@ public class AnimationLaunchActivity extends AbsActivity {
                 Math.max(y, clipRevealFrame.getHeight() - y));
         if (!isShow) {
             isShow = true;
-            showMenu(clipRevealFrame,x, y, radiusOf, radiusFromToRoot);
+            showMenu(clipRevealFrame, x, y, radiusOf, radiusFromToRoot);
         } else {
             isShow = false;
-            hideMenu(clipRevealFrame,x, y, radiusFromToRoot, radiusOf);
+            hideMenu(clipRevealFrame, x, y, radiusFromToRoot, radiusOf);
         }
     }
 
     /**
-     * 显示约定界面
-     *
+     * 显示内容界面
      */
-    private void showMenu(final ClipRevealFrame layout,int cx, int cy, float startRadius, float endRadius) {
+    private void showMenu(final ClipRevealFrame layout, int cx, int cy, float startRadius, float endRadius) {
         layout.setVisibility(View.VISIBLE);
         Animator revealAnim = createCircularReveal(layout, cx, cy, startRadius, endRadius);
         revealAnim.setInterpolator(new AccelerateDecelerateInterpolator());
-        revealAnim.setDuration(500);
+        revealAnim.setDuration(ANIMATION_CLIPREVEAL_TIME);
         revealAnim.start();
     }
 
     /**
-     * 隐藏约定界面
+     * 隐藏内容界面
      *
      * @param cx
      * @param cy
      * @param startRadius
      * @param endRadius
      */
-    private void hideMenu(final ClipRevealFrame layout,int cx, int cy, float startRadius, float endRadius) {
+    private void hideMenu(final ClipRevealFrame layout, int cx, int cy, float startRadius, float endRadius) {
         Animator revealAnim = createCircularReveal(layout, cx, cy, startRadius, endRadius);
         revealAnim.setInterpolator(new AccelerateDecelerateInterpolator());
-        revealAnim.setDuration(500);
+        revealAnim.setDuration(ANIMATION_CLIPREVEAL_TIME);
         revealAnim.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
                 layout.setVisibility(View.INVISIBLE);
+                if (null != animationEnd)
+                    animationEnd.onAnimationEnd();
             }
         });
         revealAnim.start();
