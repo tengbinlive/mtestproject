@@ -77,7 +77,7 @@ public class MainActivity extends AbsActivity {
         List list = new ArrayList<>();
         for (ActivityInfo activityInfo : data) {
             String name = activityInfo.name;
-            if (!name.contains("MainActivity")) {
+            if (!name.contains("MainActivity")&&name.contains(activityInfo.packageName)) {
                 ActInfo actInfo = new ActInfo();
                 actInfo.setClassName(name);
                 String activityName = name.substring(name.lastIndexOf(".") + 1, name.length());

@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">MTestProject</string>
+
+    <string name="audio_permission_denied_dialog_title">Audio permission request</string>
+    <string name="audio_permission_denied_dialog_feedback">Audio recording will not be available until you accept the permission request</string>
+
 </resources>

@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.binteng">
 
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
     <application
+        android:name=".MApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -20,6 +23,8 @@
         <activity android:name=".activity.AnimationLaunchActivity" />
 
         <activity android:name="com.binteng.activity.AnimationSeachActivity" />
+
+        <activity android:name="com.binteng.activity.AudioFrequencyActivity" />
     </application>
 
 </manifest>
