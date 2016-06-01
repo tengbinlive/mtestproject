@@ -16,6 +16,7 @@ import com.binteng.mview.ClipRevealFrame;
 import com.nineoldandroids.animation.ObjectAnimator;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class AnimationLaunchActivity extends AbsActivity {
 
@@ -44,16 +45,11 @@ public class AnimationLaunchActivity extends AbsActivity {
     @Override
     public void initData() {
         super.initData();
-        getRootView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                togglePointAni();
-            }
-        });
         initAnimation();
     }
 
-    private void togglePointAni() {
+    @OnClick(R.id.reset_bt)
+    void togglePointAni() {
         if (!isShow) {
             startAni.start();
         } else {
