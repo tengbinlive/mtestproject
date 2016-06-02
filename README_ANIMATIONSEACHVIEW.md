@@ -15,7 +15,7 @@
     <dependency>
       <groupId>com.bin</groupId>
       <artifactId>animationseachview</artifactId>
-      <version>1.0.6</version>
+      <version>1.0.8</version>
       <type>pom</type>
     </dependency>
 
