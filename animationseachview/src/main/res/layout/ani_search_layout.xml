@@ -16,6 +16,7 @@
         android:lines="1"
         android:padding="@dimen/search_padding"
         android:tag="search input text"
+        android:textColor="@android:color/darker_gray"
         android:textCursorDrawable="@null"
         android:textSize="@dimen/search_text_size" />
 
@@ -29,6 +30,7 @@
         android:gravity="center"
         android:lines="1"
         android:tag="search title"
+        android:textColor="@android:color/darker_gray"
         android:text="@string/search"
         android:textSize="@dimen/search_text_size" />
 
