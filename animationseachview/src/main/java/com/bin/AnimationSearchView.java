@@ -157,6 +157,15 @@ public class AnimationSearchView extends RelativeLayout {
     }
 
     /**
+     * 搜索框回车键监听事件
+     *
+     * @param listener 搜索按钮监听事件
+     */
+    public void addEditorActionListener(TextView.OnEditorActionListener listener) {
+        searchEt.setOnEditorActionListener(listener);
+    }
+
+    /**
      * 展开搜索框动画
      */
     public void openAnimation() {
