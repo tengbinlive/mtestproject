@@ -12,7 +12,7 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.binteng.activity.MainActivity">
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,9 +22,11 @@
 
         <activity android:name=".activity.AnimationLaunchActivity" />
 
-        <activity android:name="com.binteng.activity.AnimationSeachActivity" />
+        <activity android:name=".activity.AnimationSeachActivity" />
 
-        <activity android:name="com.binteng.activity.AudioFrequencyActivity" />
+        <activity android:name=".activity.AudioFrequencyActivity" />
+
+        <activity android:name=".activity.StickerActivity" />
     </application>
 
 </manifest>
