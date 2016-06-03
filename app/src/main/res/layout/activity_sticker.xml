@@ -10,12 +10,16 @@
     tools:context=".activity.StickerActivity">
 
     <ImageView
+        android:id="@+id/active_rect"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scaleType="centerCrop"
         android:src="@mipmap/bg_0" />
 
     <com.binteng.mview.StickerView
+        android:id="@+id/sticker_view"
         android:layout_width="wrap_content"
+        android:layout_centerInParent="true"
         android:layout_height="wrap_content" />
 
 </RelativeLayout>
