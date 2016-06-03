@@ -19,6 +19,7 @@ public class StickerView extends RelativeLayout {
 
     private final static int DURATION_ROTATION_TIME = 300;
     private final static float MAX_SCALE = 3.0f;
+    private final static float FLEX_SLIDE = 15.0f;
 
     private ImageView img;
     private ImageView delete;
@@ -40,7 +41,9 @@ public class StickerView extends RelativeLayout {
 
     private float lastX, lastY;
 
-    private float prevDegrees;
+    private float deltaAngle;
+
+    private boolean inInit;
 
     private GestureDetector mDetector;
     private GestureDetector mRotateOrScaleDetector;
@@ -233,6 +236,13 @@ public class StickerView extends RelativeLayout {
         public boolean onDown(MotionEvent event) {
             lastX = event.getRawX();
             lastY = event.getRawY();
+            if (!inInit) {
+                inInit = true;
+                float distanceX  = scale.getX() - (img.getX()+(img.getWidth()>>1));
+                float distanceY = scale.getY() - (img.getY()+(img.getHeight()>>1));
+                deltaAngle = (float) Math.atan2(distanceY, distanceX);
+
+            }
             return false;
         }
 
@@ -257,12 +267,10 @@ public class StickerView extends RelativeLayout {
         float distanceX = event.getRawX() - lastX;
         float distanceY = event.getRawY() - lastY;
 
-        float k = distanceY / distanceX;   //斜率
+        float ang = (float) Math.atan2(distanceY, distanceX);
 
-        float currDegrees = (float) Math.toDegrees(Math.atan(k));
-
-        prevDegrees += currDegrees;
-        ViewHelper.setRotation(rootView, prevDegrees);
+        float angleDiff = deltaAngle - ang ;
+        ViewHelper.setRotation(rootView, -angleDiff);
     }
 
     private void scaleView(float scale) {
