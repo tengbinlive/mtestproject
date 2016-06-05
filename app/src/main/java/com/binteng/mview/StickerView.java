@@ -24,7 +24,7 @@ public class StickerView extends RelativeLayout {
     private ImageView img;
     private ImageView delete;
     private ImageView flip;
-    private ImageView scale;
+    private ImageView scaleOrRotation;
 
     private float mMaxScale;
 
@@ -34,12 +34,15 @@ public class StickerView extends RelativeLayout {
 
     private boolean isOperating;
 
+    private float mScale;
+
     //活动区域
     private RectF mWidgetRect = new RectF();
 
     private View rootView;
 
     private float lastX, lastY;
+    private float centerX, centerY;
 
     private float deltaAngle;
 
@@ -55,7 +58,7 @@ public class StickerView extends RelativeLayout {
 
         void onFlip();
 
-        void onScale();
+        void onScaleOrRotation();
     }
 
     public StickerView(Context context) {
@@ -75,7 +78,7 @@ public class StickerView extends RelativeLayout {
         img = (ImageView) getRootView().findViewById(R.id.img);
         delete = (ImageView) getRootView().findViewById(R.id.delete);
         flip = (ImageView) getRootView().findViewById(R.id.flip);
-        scale = (ImageView) getRootView().findViewById(R.id.scale);
+        scaleOrRotation = (ImageView) getRootView().findViewById(R.id.scale_rotation);
 
 
         //默认活动区域 屏幕内
@@ -84,7 +87,11 @@ public class StickerView extends RelativeLayout {
 
         int width = wm.getDefaultDisplay().getWidth();
         int height = wm.getDefaultDisplay().getHeight();
+
         mWidgetRect.set(0, 0, width, height);
+
+        centerX = mWidgetRect.centerX();
+        centerY = mWidgetRect.centerY();
 
         mMaxScale = MAX_SCALE;
 
@@ -110,12 +117,15 @@ public class StickerView extends RelativeLayout {
                 }
             }
         });
-        scale.setOnTouchListener(new OnTouchListener() {
+        scaleOrRotation.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (isEnable) {
                     mRotateOrScaleDetector.onTouchEvent(event);
                     return true;
+                }
+                if (null != onStickerListener) {
+                    onStickerListener.onScaleOrRotation();
                 }
                 return false;
             }
@@ -153,6 +163,8 @@ public class StickerView extends RelativeLayout {
 
     public void setmWidgetRect(RectF mWidgetRect) {
         this.mWidgetRect = mWidgetRect;
+        centerX = mWidgetRect.centerX();
+        centerY = mWidgetRect.centerY();
     }
 
     public boolean isEnable() {
@@ -236,13 +248,7 @@ public class StickerView extends RelativeLayout {
         public boolean onDown(MotionEvent event) {
             lastX = event.getRawX();
             lastY = event.getRawY();
-            if (!inInit) {
-                inInit = true;
-                float distanceX  = scale.getX() - (img.getX()+(img.getWidth()>>1));
-                float distanceY = scale.getY() - (img.getY()+(img.getHeight()>>1));
-                deltaAngle = (float) Math.atan2(distanceY, distanceX);
-
-            }
+            resetAeltaAngle();
             return false;
         }
 
@@ -256,7 +262,7 @@ public class StickerView extends RelativeLayout {
 
     private void rotateOrScale(MotionEvent event) {
         rotateView(event);
-//        scaleView();
+//        scaleView(event);
         lastX = event.getRawX();
         lastY = event.getRawY();
 
@@ -264,31 +270,44 @@ public class StickerView extends RelativeLayout {
 
     private void rotateView(MotionEvent event) {
 
-        float distanceX = event.getRawX() - lastX;
-        float distanceY = event.getRawY() - lastY;
+        float rawX = event.getRawX();
+        float rawY = event.getRawY();
+        float x = event.getX();
+        float y = event.getY();
 
-        float ang = (float) Math.atan2(distanceY, distanceX);
+        float lx =lastX;
+        float ly =lastY;
 
-        float angleDiff = deltaAngle - ang ;
+        float ang = (float) Math.toDegrees(Math.atan2(event.getRawY() - centerY, event.getRawX() - centerX));
+
+        float angleDiff = deltaAngle - ang;
         ViewHelper.setRotation(rootView, -angleDiff);
+
     }
 
-    private void scaleView(float scale) {
-        if (scale < 1) {
-            scale = 1;
-        } else if (scale > mMaxScale) {
-            scale = mMaxScale;
+    private void scaleView(MotionEvent event) {
+        float distanceX = event.getRawX() - lastX;
+
+        float distanceY = event.getRawY() - lastY;
+        int temp = 1;
+        if (distanceX < 0 || distanceY < 0) {
+            temp = -1;
         }
-        ViewHelper.setScaleX(rootView, scale);
-        ViewHelper.setScaleX(rootView, scale);
+        float scale = (float) Math.sqrt(distanceX * distanceX + distanceY * distanceY) * 0.001f;
+        mScale += scale * temp;
+        if (mScale < 1) {
+            mScale = 1;
+        } else if (mScale > mMaxScale) {
+            mScale = mMaxScale;
+        }
+        ViewHelper.setScaleX(rootView, mScale);
+        ViewHelper.setScaleY(rootView, mScale);
     }
 
-    private float caculateSlope(MotionEvent event) {
-        float x1 = lastX;
-        float y1 = lastY;
-        float x2 = event.getRawX();
-        float y2 = event.getRawY();
-        return (y2 - y1) / (x2 - x1);
+    private void resetAeltaAngle() {
+        float buttonCenterX = getX() + scaleOrRotation.getX() + scaleOrRotation.getWidth()*0.5f;
+        float buttonCenterY = getY() + scaleOrRotation.getY() + scaleOrRotation.getHeight()*0.5f;
+        deltaAngle = (float) Math.toDegrees(Math.atan2(buttonCenterY - centerY, buttonCenterX - centerX));
     }
 
 }
