@@ -200,4 +200,17 @@ public class AnimationLaunchActivity extends AbsActivity {
         return reveal;
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        if (null != clipRevealFrame) {
+            clipRevealFrame.clearAnimation();
+        }
+        if(null!=point){
+            point.clearAnimation();
+        }
+        if(null!=startAni){
+            startAni.cancel();
+        }
+    }
 }

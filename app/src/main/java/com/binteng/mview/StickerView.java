@@ -18,7 +18,7 @@ import com.nineoldandroids.view.ViewHelper;
 public class StickerView extends RelativeLayout {
 
     private final static int DURATION_ROTATION_TIME = 300;
-    private final static float MAX_SCALE = 3.0f;
+    private final static float MAX_SCALE = 1.5f;
     private final static float FLEX_SLIDE = 15.0f;
 
     private ImageView img;
@@ -74,7 +74,7 @@ public class StickerView extends RelativeLayout {
     private void init(Context context) {
         rootView = LayoutInflater.from(context).inflate(R.layout.layout_sticker_view, this, true);
         mDetector = new GestureDetector(getContext(), mGestureListener);
-        mRotateOrScaleDetector = new GestureDetector(getContext(), mScaleListener);
+        mRotateOrScaleDetector = new GestureDetector(getContext(), mScaleOrRotationListener);
         img = (ImageView) getRootView().findViewById(R.id.img);
         delete = (ImageView) getRootView().findViewById(R.id.delete);
         flip = (ImageView) getRootView().findViewById(R.id.flip);
@@ -90,8 +90,8 @@ public class StickerView extends RelativeLayout {
 
         mWidgetRect.set(0, 0, width, height);
 
-        centerX = mWidgetRect.centerX();
-        centerY = mWidgetRect.centerY();
+//        centerX = mWidgetRect.centerX();
+//        centerY = mWidgetRect.centerY();
 
         mMaxScale = MAX_SCALE;
 
@@ -163,8 +163,8 @@ public class StickerView extends RelativeLayout {
 
     public void setmWidgetRect(RectF mWidgetRect) {
         this.mWidgetRect = mWidgetRect;
-        centerX = mWidgetRect.centerX();
-        centerY = mWidgetRect.centerY();
+//        centerX = mWidgetRect.centerX();
+//        centerY = mWidgetRect.centerY();
     }
 
     public boolean isEnable() {
@@ -226,6 +226,11 @@ public class StickerView extends RelativeLayout {
             return true;
         }
 
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            return super.onFling(e1, e2, velocityX, velocityY);
+        }
+
     };
 
     private void moveView(MotionEvent event) {
@@ -242,12 +247,12 @@ public class StickerView extends RelativeLayout {
         lastY = event.getRawY();
     }
 
-    private GestureDetector.OnGestureListener mScaleListener = new GestureDetector.SimpleOnGestureListener() {
+    private GestureDetector.OnGestureListener mScaleOrRotationListener = new GestureDetector.SimpleOnGestureListener() {
 
         @Override
         public boolean onDown(MotionEvent event) {
-            lastX = event.getRawX();
-            lastY = event.getRawY();
+            lastX = event.getRawX()-centerX;
+            lastY = event.getRawY()-centerY;
             resetAeltaAngle();
             return false;
         }
@@ -262,39 +267,28 @@ public class StickerView extends RelativeLayout {
 
     private void rotateOrScale(MotionEvent event) {
         rotateView(event);
-//        scaleView(event);
-        lastX = event.getRawX();
-        lastY = event.getRawY();
-
+        scaleView(event);
     }
 
     private void rotateView(MotionEvent event) {
 
-        float rawX = event.getRawX();
-        float rawY = event.getRawY();
-        float x = event.getX();
-        float y = event.getY();
-
-        float lx =lastX;
-        float ly =lastY;
-
         float ang = (float) Math.toDegrees(Math.atan2(event.getRawY() - centerY, event.getRawX() - centerX));
 
-        float angleDiff = deltaAngle - ang;
-        ViewHelper.setRotation(rootView, -angleDiff);
+        float angleDiff = ang - deltaAngle;
+
+        ViewHelper.setRotation(rootView, angleDiff);
 
     }
 
     private void scaleView(MotionEvent event) {
-        float distanceX = event.getRawX() - lastX;
-
-        float distanceY = event.getRawY() - lastY;
-        int temp = 1;
-        if (distanceX < 0 || distanceY < 0) {
-            temp = -1;
-        }
-        float scale = (float) Math.sqrt(distanceX * distanceX + distanceY * distanceY) * 0.001f;
-        mScale += scale * temp;
+        float x = event.getRawX();
+        float y = event.getRawY();
+        float currentDX = x - centerX;
+        float currentDY = y - centerY;
+        float distanceLast = (float) Math.sqrt(lastX * lastX + lastY * lastY);
+        float distanceCurrent = (float) Math.sqrt(currentDX * currentDX + currentDY * currentDY);
+        float scale = (distanceCurrent-distanceLast) * 0.002f;
+        mScale += scale;
         if (mScale < 1) {
             mScale = 1;
         } else if (mScale > mMaxScale) {
@@ -302,11 +296,30 @@ public class StickerView extends RelativeLayout {
         }
         ViewHelper.setScaleX(rootView, mScale);
         ViewHelper.setScaleY(rootView, mScale);
+        lastX = currentDX;
+        lastY = currentDY;
+    }
+
+    private int getPositiveAndNegative(float x,float y,float distanceX,float distanceY){
+        boolean distance = distanceX<0||distanceY<0;
+        if(x<centerX){
+            return distance?1:-1;
+        }else{
+            return distance?-1:1;
+        }
     }
 
     private void resetAeltaAngle() {
-        float buttonCenterX = getX() + scaleOrRotation.getX() + scaleOrRotation.getWidth()*0.5f;
-        float buttonCenterY = getY() + scaleOrRotation.getY() + scaleOrRotation.getHeight()*0.5f;
+        int[] position_scaleOrRotation = new int[2];
+        scaleOrRotation.getLocationOnScreen(position_scaleOrRotation);
+
+        int[] position_img = new int[2];
+        getLocationOnScreen(position_img);
+
+        float buttonCenterX = position_scaleOrRotation[0] + scaleOrRotation.getWidth() * 0.5f;
+        float buttonCenterY = position_scaleOrRotation[1] + scaleOrRotation.getHeight() * 0.5f;
+        centerX = position_img[0] + getWidth() * 0.5f;
+        centerY = position_img[1] + getHeight() * 0.5f;
         deltaAngle = (float) Math.toDegrees(Math.atan2(buttonCenterY - centerY, buttonCenterX - centerX));
     }
 
