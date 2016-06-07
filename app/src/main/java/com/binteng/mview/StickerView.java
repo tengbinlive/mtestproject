@@ -12,14 +12,14 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.binteng.R;
+import com.binteng.tools.Point2D;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.view.ViewHelper;
 
 public class StickerView extends RelativeLayout {
 
     private final static int DURATION_ROTATION_TIME = 300;
-    private final static float MAX_SCALE = 1.5f;
-    private final static float FLEX_SLIDE = 15.0f;
+    private final static float MAX_SCALE = 1.7f;
 
     private ImageView img;
     private ImageView delete;
@@ -32,26 +32,24 @@ public class StickerView extends RelativeLayout {
 
     private boolean isEnable = true;
 
-    private boolean isOperating;
+    private float angleDiff; //旋转角度
 
-    private float mScale;
+    private float mScale; //缩放比例
 
-    //活动区域
-    private RectF mWidgetRect = new RectF();
+    private RectF mWidgetRect = new RectF();//活动区域
+
+    private RectF mDrawRect = new RectF();//this view rect . 用于获取旋转 缩放中心点
 
     private View rootView;
 
-    private float lastX, lastY;
-    private float centerX, centerY;
-
-    private float deltaAngle;
+    private float lastX, lastY; //用于计算触摸距离
 
     private boolean inInit;
 
-    private GestureDetector mDetector;
-    private GestureDetector mRotateOrScaleDetector;
+    private GestureDetector mDetector;//移动
+    private GestureDetector mRotateOrScaleDetector;//缩放旋转
 
-    private OnStickerListener onStickerListener;
+    private OnStickerListener onStickerListener; //贴纸按钮回调
 
     public interface OnStickerListener {
         void onDelete();
@@ -80,7 +78,6 @@ public class StickerView extends RelativeLayout {
         flip = (ImageView) getRootView().findViewById(R.id.flip);
         scaleOrRotation = (ImageView) getRootView().findViewById(R.id.scale_rotation);
 
-
         //默认活动区域 屏幕内
         WindowManager wm = (WindowManager) getContext()
                 .getSystemService(Context.WINDOW_SERVICE);
@@ -89,9 +86,6 @@ public class StickerView extends RelativeLayout {
         int height = wm.getDefaultDisplay().getHeight();
 
         mWidgetRect.set(0, 0, width, height);
-
-//        centerX = mWidgetRect.centerX();
-//        centerY = mWidgetRect.centerY();
 
         mMaxScale = MAX_SCALE;
 
@@ -163,8 +157,6 @@ public class StickerView extends RelativeLayout {
 
     public void setmWidgetRect(RectF mWidgetRect) {
         this.mWidgetRect = mWidgetRect;
-//        centerX = mWidgetRect.centerX();
-//        centerY = mWidgetRect.centerY();
     }
 
     public boolean isEnable() {
@@ -217,6 +209,7 @@ public class StickerView extends RelativeLayout {
         public boolean onDown(MotionEvent event) {
             lastX = event.getRawX();
             lastY = event.getRawY();
+            initDrawRect();
             return false;
         }
 
@@ -245,15 +238,17 @@ public class StickerView extends RelativeLayout {
 
         lastX = event.getRawX();
         lastY = event.getRawY();
+
+        mDrawRect.offset(distanceX, distanceY);
     }
 
     private GestureDetector.OnGestureListener mScaleOrRotationListener = new GestureDetector.SimpleOnGestureListener() {
 
         @Override
         public boolean onDown(MotionEvent event) {
-            lastX = event.getRawX()-centerX;
-            lastY = event.getRawY()-centerY;
-            resetAeltaAngle();
+            initDrawRect();
+            lastX = event.getRawX();
+            lastY = event.getRawY();
             return false;
         }
 
@@ -272,22 +267,29 @@ public class StickerView extends RelativeLayout {
 
     private void rotateView(MotionEvent event) {
 
-        float ang = (float) Math.toDegrees(Math.atan2(event.getRawY() - centerY, event.getRawX() - centerX));
+        final float pt1[] = new float[]{mDrawRect.centerX(), mDrawRect.centerY()};//中心点
+        final float pt2[] = new float[]{mDrawRect.right, mDrawRect.bottom};//旋转按钮点
+        final float pt3[] = new float[]{mDrawRect.right + event.getX(), mDrawRect.bottom + event.getY()};//触摸点
+        double ang1 = Math.toDegrees(Math.atan2(pt2[1] - pt1[1], pt2[0] - pt1[0]));//旋转按钮 与 中心点角度
+        double ang2 = Math.toDegrees(Math.atan2(pt3[1] - pt1[1], pt3[0] - pt1[0]));//触摸点 与 中心点角度
 
-        float angleDiff = ang - deltaAngle;
-
-        ViewHelper.setRotation(rootView, angleDiff);
+        angleDiff += ang2 - ang1;
+        ViewHelper.setRotation(rootView, Point2D.angle360(angleDiff));
 
     }
 
     private void scaleView(MotionEvent event) {
-        float x = event.getRawX();
-        float y = event.getRawY();
-        float currentDX = x - centerX;
-        float currentDY = y - centerY;
-        float distanceLast = (float) Math.sqrt(lastX * lastX + lastY * lastY);
-        float distanceCurrent = (float) Math.sqrt(currentDX * currentDX + currentDY * currentDY);
-        float scale = (distanceCurrent-distanceLast) * 0.002f;
+
+        float distanceX = lastX - mDrawRect.centerX();
+        float distanceY = lastY - mDrawRect.centerY();
+
+        float distanceRawX = event.getRawX() - mDrawRect.centerX();
+        float distanceLastY = event.getRawY() - mDrawRect.centerY();
+
+        float distance = (float) Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+        float distanceRaw = (float) Math.sqrt(distanceRawX * distanceRawX + distanceLastY * distanceLastY);
+
+        float scale = (distanceRaw - distance) * 0.002f;
         mScale += scale;
         if (mScale < 1) {
             mScale = 1;
@@ -296,31 +298,15 @@ public class StickerView extends RelativeLayout {
         }
         ViewHelper.setScaleX(rootView, mScale);
         ViewHelper.setScaleY(rootView, mScale);
-        lastX = currentDX;
-        lastY = currentDY;
+        lastX = event.getRawX();
+        lastY = event.getRawY();
     }
 
-    private int getPositiveAndNegative(float x,float y,float distanceX,float distanceY){
-        boolean distance = distanceX<0||distanceY<0;
-        if(x<centerX){
-            return distance?1:-1;
-        }else{
-            return distance?-1:1;
+    private void initDrawRect() {
+        if (!inInit) {
+            inInit = true;
+            mDrawRect.set(getLeft(), getTop(), getRight(), getBottom());
         }
-    }
-
-    private void resetAeltaAngle() {
-        int[] position_scaleOrRotation = new int[2];
-        scaleOrRotation.getLocationOnScreen(position_scaleOrRotation);
-
-        int[] position_img = new int[2];
-        getLocationOnScreen(position_img);
-
-        float buttonCenterX = position_scaleOrRotation[0] + scaleOrRotation.getWidth() * 0.5f;
-        float buttonCenterY = position_scaleOrRotation[1] + scaleOrRotation.getHeight() * 0.5f;
-        centerX = position_img[0] + getWidth() * 0.5f;
-        centerY = position_img[1] + getHeight() * 0.5f;
-        deltaAngle = (float) Math.toDegrees(Math.atan2(buttonCenterY - centerY, buttonCenterX - centerX));
     }
 
 }
