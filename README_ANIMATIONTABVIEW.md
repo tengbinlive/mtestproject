@@ -4,14 +4,14 @@
 
     dependencies {
 
-          compile 'com.bin:animationtabview:1.0.2'
+          compile 'com.bin.animationseachview:animationtabview:1.0.2'
 
     }
 
 #### maven
 
     <dependency>
-      <groupId>com.bin</groupId>
+      <groupId>com.bin.animationseachview</groupId>
       <artifactId>animationtabview</artifactId>
       <version>1.0.2</version>
       <type>pom</type>
