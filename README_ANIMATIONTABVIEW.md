@@ -1,12 +1,10 @@
 # animation_seachview
 
-![](https://github.com/tengbinlive/mtestproject/blob/master/images/demo.gif) 
-
 #### gradle
 
     dependencies {
 
-          compile 'com.bin:animationseachview:1.0.8'
+          compile 'com.bin:animationtabview:1.0.1'
 
     }
 
@@ -14,57 +12,44 @@
 
     <dependency>
       <groupId>com.bin</groupId>
-      <artifactId>animationseachview</artifactId>
-      <version>1.0.8</version>
+      <artifactId>animationtabview</artifactId>
+      <version>1.0.1</version>
       <type>pom</type>
     </dependency>
 
 #### xml
 
-    <com.bin.AnimationSearchView
-            android:id="@+id/searchView"
+    <com.bin.animationtabview.AnimationTabView
+            android:id="@+id/tab_layout"
             android:layout_width="match_parent"
-            android:layout_margin="@dimen/search_margin"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="@dimen/margin_10"
+            android:background="@drawable/bg_round_pink"
+            android:padding="@dimen/padding_5" />
 
 
-#### 监听输入框内容
+#### 回调事件
 
-    searchView.addTextChangedListener(new TextWatcherAdapter(){
+    tabView.setOnItemClickListener(new ECallOnClick() {
                 @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    super.onTextChanged(s, start, before, count);
+                public void callOnClick(View view, AnimationTabItem item, int index) {
+                    CommonUtil.showToast(item.getTitle());
                 }
             });
 
 #### 返回键关闭动画
 
-    @Override
-        public void onBackPressed() {
-            if (searchView.isAnimationOpen()) {
-                searchView.closeAnimation();
-                return;
-            }
-            super.onBackPressed();
-        }
+     int whiteColor = getResources().getColor(R.color.white);
+     int orangeColor = getResources().getColor(R.color.orange);
+     
+     AnimationTabItem item = new AnimationTabItem();
+     item.setTitle("title0x00");                        //标题
+     item.setTitleColorNormal(whiteColor);              //未选中标题字体颜色
+     item.setTitleColorPressed(orangeColor);            //选中标题字体颜色
+     item.setIconNormal(R.mipmap.ic_test1_normal);      //未选中icon
+     item.setIconPressed(R.mipmap.ic_test1_pressed);    //选中icon
+     item.setGravity(AnimationTabItem.GRAVITY_LEFT);    //item 左右位置
+     items.add(item);
         
-#### 修改search背景 
-
-    添加 search_content_bg.xml
-    
-    <?xml version="1.0" encoding="utf-8"?>
-    <shape xmlns:android="http://schemas.android.com/apk/res/android" >
-    
-        <solid android:color="#FFFFFF" />
-        <corners
-            android:bottomLeftRadius="8dp"
-            android:bottomRightRadius="8dp"
-            android:topLeftRadius="8dp"
-            android:topRightRadius="8dp" />
-    
-    </shape>
-    
-    或是
-    
-    searchView.setSearchContentBackgroundColor(R.drawable.bg);
 
