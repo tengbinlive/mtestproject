@@ -4,7 +4,7 @@
 
     dependencies {
 
-          compile 'com.bin:animationtabview:1.0.1'
+          compile 'com.bin:animationtabview:1.0.2'
 
     }
 
@@ -13,7 +13,7 @@
     <dependency>
       <groupId>com.bin</groupId>
       <artifactId>animationtabview</artifactId>
-      <version>1.0.1</version>
+      <version>1.0.2</version>
       <type>pom</type>
     </dependency>
 
