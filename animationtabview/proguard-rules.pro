@@ -15,3 +15,7 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+
+-dontwarn com.nineoldandroids.*
+-keep class com.nineoldandroids.** { *;}
