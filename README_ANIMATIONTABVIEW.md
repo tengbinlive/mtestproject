@@ -1,17 +1,19 @@
 # animation_seachview
 
+![](https://github.com/tengbinlive/mtestproject/blob/master/images/demo1.gif) 
+
 #### gradle
 
     dependencies {
 
-          compile 'com.bin.animationseachview:animationtabview:1.0.2'
+          compile 'com.bin:animationtabview:1.0.2'
 
     }
 
 #### maven
 
     <dependency>
-      <groupId>com.bin.animationseachview</groupId>
+      <groupId>com.bin</groupId>
       <artifactId>animationtabview</artifactId>
       <version>1.0.2</version>
       <type>pom</type>
