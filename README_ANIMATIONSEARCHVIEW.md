@@ -28,7 +28,7 @@
             android:layout_height="match_parent" />
 
 
-#### 监听输入框内容
+#### text changed listener
 
     searchView.addTextChangedListener(new TextWatcherAdapter(){
                 @Override
@@ -37,7 +37,7 @@
                 }
             });
 
-#### 返回键关闭动画
+#### close animation
 
     @Override
         public void onBackPressed() {
@@ -48,9 +48,9 @@
             super.onBackPressed();
         }
         
-#### 修改search背景 
+#### change background search
 
-    添加 search_content_bg.xml
+    add search_content_bg.xml
     
     <?xml version="1.0" encoding="utf-8"?>
     <shape xmlns:android="http://schemas.android.com/apk/res/android" >
@@ -64,7 +64,7 @@
     
     </shape>
     
-    或是
+    or
     
     searchView.setSearchContentBackgroundColor(R.drawable.bg);
 

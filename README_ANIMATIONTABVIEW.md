@@ -31,7 +31,7 @@
             android:padding="@dimen/padding_5" />
 
 
-#### 回调事件
+#### callback function
 
     tabView.setOnItemClickListener(new ECallOnClick() {
                 @Override
@@ -40,18 +40,18 @@
                 }
             });
 
-#### 初始化item
+#### init item
 
      int whiteColor = getResources().getColor(R.color.white);
      int orangeColor = getResources().getColor(R.color.orange);
      
      AnimationTabItem item = new AnimationTabItem();
-     item.setTitle("title0x00");                        //标题
-     item.setTitleColorNormal(whiteColor);              //未选中标题字体颜色
-     item.setTitleColorPressed(orangeColor);            //选中标题字体颜色
-     item.setIconNormal(R.mipmap.ic_test1_normal);      //未选中icon
-     item.setIconPressed(R.mipmap.ic_test1_pressed);    //选中icon
-     item.setGravity(AnimationTabItem.GRAVITY_LEFT);    //item 左右位置
+     item.setTitle("title0x00");                        //title
+     item.setTitleColorNormal(whiteColor);              //Unselected color title font
+     item.setTitleColorPressed(orangeColor);            //selected color title font
+     item.setIconNormal(R.mipmap.ic_test1_normal);      //Unselected icon
+     item.setIconPressed(R.mipmap.ic_test1_pressed);    //selected icon
+     item.setGravity(AnimationTabItem.GRAVITY_LEFT);    //item left | right
      items.add(item);
         
 
