@@ -1,4 +1,4 @@
-# animation_seachview
+# animation_searchview
 
 ![](https://github.com/tengbinlive/mtestproject/blob/master/images/demo.gif) 
 
@@ -6,7 +6,7 @@
 
     dependencies {
 
-          compile 'com.bin:animationseachview:1.0.9'
+          compile 'com.bin:animationsearchview:1.1.0'
 
     }
 
@@ -14,8 +14,8 @@
 
     <dependency>
       <groupId>com.bin</groupId>
-      <artifactId>animationseachview</artifactId>
-      <version>1.0.9</version>
+      <artifactId>animationsearchview</artifactId>
+      <version>1.1.0</version>
       <type>pom</type>
     </dependency>
 
