@@ -1,1 +1,1 @@
-include ':app', ':animationseachview', ':animationtabview'
+include ':app', ':animationtabview', ':animationsearchview'

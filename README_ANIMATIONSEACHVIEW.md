@@ -6,7 +6,7 @@
 
     dependencies {
 
-          compile 'com.bin:animationseachview:1.0.8'
+          compile 'com.bin:animationseachview:1.0.9'
 
     }
 
@@ -15,7 +15,7 @@
     <dependency>
       <groupId>com.bin</groupId>
       <artifactId>animationseachview</artifactId>
-      <version>1.0.8</version>
+      <version>1.0.9</version>
       <type>pom</type>
     </dependency>
 

@@ -24,7 +24,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
-    compile project(':animationseachview')
+    compile project(':animationsearchview')
     compile 'com.nhaarman.listviewanimations:lib-core:3.1.0@aar'
     compile 'com.jakewharton:butterknife:8.0.1'
     compile 'com.karumi:dexter:2.2.2'
