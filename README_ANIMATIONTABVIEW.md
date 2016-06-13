@@ -40,7 +40,7 @@
                 }
             });
 
-#### 返回键关闭动画
+#### 初始化item
 
      int whiteColor = getResources().getColor(R.color.white);
      int orangeColor = getResources().getColor(R.color.orange);
