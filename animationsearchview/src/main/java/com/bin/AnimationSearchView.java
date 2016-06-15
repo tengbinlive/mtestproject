@@ -141,7 +141,9 @@ public class AnimationSearchView extends RelativeLayout {
     /**
      * 设置回车键类型
      *
-     * @param imeOptions
+     * @param imeOptions 输入类型
+     *                   e.g.
+     *                   EditorInfo.IME_ACTION_SEARCH
      */
     public void setImeOptions(int imeOptions) {
         searchEt.setImeOptions(imeOptions);
