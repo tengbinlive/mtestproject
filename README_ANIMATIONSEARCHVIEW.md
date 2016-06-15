@@ -6,7 +6,7 @@
 
     dependencies {
 
-          compile 'com.bin:animationsearchview:1.1.0'
+          compile 'com.bin:animationsearchview:1.1.1'
 
     }
 
@@ -15,7 +15,7 @@
     <dependency>
       <groupId>com.bin</groupId>
       <artifactId>animationsearchview</artifactId>
-      <version>1.1.0</version>
+      <version>1.1.1</version>
       <type>pom</type>
     </dependency>
 
@@ -28,14 +28,16 @@
             android:layout_height="match_parent" />
 
 
-#### text changed listener
+#### listener
 
-    searchView.addTextChangedListener(new TextWatcherAdapter(){
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    super.onTextChanged(s, start, before, count);
-                }
-            });
+text changed
+
+    searchView.addTextChangedListener();
+            
+enter
+    
+    searchView.addEditorActionListener();
+    
 
 #### close animation
 

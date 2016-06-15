@@ -139,6 +139,15 @@ public class AnimationSearchView extends RelativeLayout {
     }
 
     /**
+     * 设置回车键类型
+     *
+     * @param imeOptions
+     */
+    public void setImeOptions(int imeOptions) {
+        searchEt.setImeOptions(imeOptions);
+    }
+
+    /**
      * 动画是否处于展开状态
      *
      * @return true 展开状态 | false 关闭状态
