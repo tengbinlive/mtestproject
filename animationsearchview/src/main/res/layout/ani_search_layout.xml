@@ -12,6 +12,7 @@
         android:layout_centerInParent="true"
         android:background="@drawable/search_content_bg"
         android:gravity="center"
+        android:imeOptions="actionSearch"
         android:singleLine="true"
         android:inputType="text"
         android:padding="@dimen/search_padding"
