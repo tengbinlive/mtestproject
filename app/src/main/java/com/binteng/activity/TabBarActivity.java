@@ -39,24 +39,26 @@ public class TabBarActivity extends AbsActivity {
 
         item = new Model();
         item.setTitle("title0x01");
+        item.setAnchor(1);
         item.setTitleColorNormal(whiteColor);
         item.setTitleColorPressed(orangeColor);
         item.setIconNormal(R.mipmap.ic_test1_normal);
         item.setIconPressed(R.mipmap.ic_test1_pressed);
-        item.setGravity(AnimationTabItem.GRAVITY_LEFT);
-        items.add(item);
-
-        item = new Model();
-        item.setTitle("title0x02");
-        item.setTitleColorNormal(whiteColor);
-        item.setTitleColorPressed(orangeColor);
-        item.setIconNormal(R.mipmap.ic_test0_normal);
-        item.setIconPressed(R.mipmap.ic_test0_pressed);
         item.setGravity(AnimationTabItem.GRAVITY_RIGHT);
         items.add(item);
 
         item = new Model();
         item.setTitle("title0x02");
+        item.setAnchor(4);
+        item.setTitleColorNormal(whiteColor);
+        item.setTitleColorPressed(orangeColor);
+        item.setIconNormal(R.mipmap.ic_test0_normal);
+        item.setIconPressed(R.mipmap.ic_test0_pressed);
+        item.setGravity(AnimationTabItem.GRAVITY_LEFT);
+        items.add(item);
+
+        item = new Model();
+        item.setTitle("title0x03");
         item.setTitleColorNormal(whiteColor);
         item.setTitleColorPressed(orangeColor);
         item.setIconNormal(R.mipmap.ic_test0_normal);

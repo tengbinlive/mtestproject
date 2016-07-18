@@ -53,7 +53,6 @@ public class TabBarView extends RelativeLayout {
 
     private boolean isBuild;
 
-
     public void setOnItemClickListener(ECallOnClick onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
@@ -103,15 +102,14 @@ public class TabBarView extends RelativeLayout {
     private void buildItem() {
         int index = 0;
         this.removeAllViews();
-        boolean leftAdd = false;//最左边是否已经有item
-        boolean rightAdd = false;//最右边是否已经有item
         int margin_tab_item = itemMargin == 0 ? 0 : (int) mContext.getResources().getDimension(itemMargin);
         for (final Model item : tabItems) {
             LinearLayout item_layout;
             boolean isRight = item.getGravity() == Model.GRAVITY_RIGHT;
+            int anchor = item.getAnchor();
             item_layout = (LinearLayout) LayoutInflater.from(mContext).inflate(itemLayoutId, this, false);
             setItemStatus(item, index == 0, item_layout);
-            item_layout.setId(index + 1);//设置0 无效
+            item_layout.setId(index+1);
             item_layout.setTag(index);
             item_layout.setOnClickListener(new OnClickListener() {
                 @Override
@@ -127,23 +125,11 @@ public class TabBarView extends RelativeLayout {
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(mModelSize, RelativeLayout.LayoutParams.WRAP_CONTENT);
             params.setMargins(margin_tab_item, margin_tab_item, margin_tab_item, margin_tab_item);
 
-            if (isRight && !rightAdd) {
-                params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
-                rightAdd = true;
-            } else if (!leftAdd) {
-                params.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
-                leftAdd = true;
+            if (anchor > 0) {
+                params.addRule(item.getGravity(), anchor);
             } else {
-                if (index > 0) {
-                    int id = this.getChildAt(index - 1).getId();
-                    if (rightAdd && item.getGravity() == Model.GRAVITY_RIGHT) {
-                        params.addRule(RelativeLayout.LEFT_OF, id);
-                    } else {
-                        params.addRule(RelativeLayout.RIGHT_OF, id);
-                    }
-                }
+                params.addRule(isRight ? RelativeLayout.ALIGN_PARENT_RIGHT : RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
             }
-
             this.addView(item_layout, params);
             index++;
         }
@@ -252,7 +238,7 @@ public class TabBarView extends RelativeLayout {
         final int width = MeasureSpec.getSize(widthMeasureSpec);
         final int height = MeasureSpec.getSize(heightMeasureSpec);
 
-        if (null ==tabItems || tabItems.isEmpty() || width == 0 || height == 0) return;
+        if (null == tabItems || tabItems.isEmpty() || width == 0 || height == 0) return;
 
 
         if (mModelNum <= 0) {
@@ -283,5 +269,9 @@ public class TabBarView extends RelativeLayout {
 
     public void setItemMargin(int itemMargin) {
         this.itemMargin = itemMargin;
+    }
+
+    public int getSelection() {
+        return selection;
     }
 }
