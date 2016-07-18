@@ -252,7 +252,7 @@ public class TabBarView extends RelativeLayout {
         final int width = MeasureSpec.getSize(widthMeasureSpec);
         final int height = MeasureSpec.getSize(heightMeasureSpec);
 
-        if (tabItems.isEmpty() || width == 0 || height == 0) return;
+        if (null ==tabItems || tabItems.isEmpty() || width == 0 || height == 0) return;
 
 
         if (mModelNum <= 0) {
