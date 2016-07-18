@@ -29,6 +29,8 @@
         <activity android:name=".activity.StickerActivity" />
 
         <activity android:name=".activity.AnimationTabActivity" />
+
+        <activity android:name=".activity.TabBarActivity" />
     </application>
 
 </manifest>

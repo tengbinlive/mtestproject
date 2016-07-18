@@ -5,16 +5,11 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        minSdkVersion 13
+        minSdkVersion 11
         targetSdkVersion 23
-        versionCode 13
-        versionName PROJ_VERSION
+        versionCode 1
+        versionName "1.0"
     }
-
-    lintOptions {
-        abortOnError false
-    }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -26,6 +21,8 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.nineoldandroids:library:2.4.0'
-
 }
+
+apply plugin: 'com.jfrog.bintray'
+apply from: 'bintray.gradle'
 

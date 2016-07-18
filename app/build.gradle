@@ -30,4 +30,5 @@ dependencies {
     compile 'com.karumi:dexter:2.2.2'
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
     compile project(path: ':animationtabview')
+    compile project(path: ':tabbarview')
 }

@@ -3,8 +3,9 @@ package com.binteng.activity;
 import android.view.View;
 
 import com.bin.animationtabview.AnimationTabItem;
-import com.bin.animationtabview.AnimationTabView;
-import com.bin.animationtabview.ECallOnClick;
+import com.bin.tabbarview.ECallOnClick;
+import com.bin.tabbarview.Model;
+import com.bin.tabbarview.TabBarView;
 import com.binteng.AbsActivity;
 import com.binteng.R;
 import com.binteng.tools.CommonUtil;
@@ -14,16 +15,16 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class AnimationTabActivity extends AbsActivity {
+public class TabBarActivity extends AbsActivity {
 
     @BindView(R.id.tab_layout)
-    AnimationTabView tabView;
+    TabBarView tabView;
 
     @Override
     public void initData() {
         super.initData();
-        List<AnimationTabItem> items = new ArrayList<>();
-        AnimationTabItem item = new AnimationTabItem();
+        List<Model> items = new ArrayList<>();
+        Model item = new Model();
 
         int whiteColor = getResources().getColor(R.color.white);
         int orangeColor = getResources().getColor(R.color.orange);
@@ -36,7 +37,7 @@ public class AnimationTabActivity extends AbsActivity {
         item.setGravity(AnimationTabItem.GRAVITY_LEFT);
         items.add(item);
 
-        item = new AnimationTabItem();
+        item = new Model();
         item.setTitle("title0x01");
         item.setTitleColorNormal(whiteColor);
         item.setTitleColorPressed(orangeColor);
@@ -45,7 +46,16 @@ public class AnimationTabActivity extends AbsActivity {
         item.setGravity(AnimationTabItem.GRAVITY_LEFT);
         items.add(item);
 
-        item = new AnimationTabItem();
+        item = new Model();
+        item.setTitle("title0x02");
+        item.setTitleColorNormal(whiteColor);
+        item.setTitleColorPressed(orangeColor);
+        item.setIconNormal(R.mipmap.ic_test0_normal);
+        item.setIconPressed(R.mipmap.ic_test0_pressed);
+        item.setGravity(AnimationTabItem.GRAVITY_RIGHT);
+        items.add(item);
+
+        item = new Model();
         item.setTitle("title0x02");
         item.setTitleColorNormal(whiteColor);
         item.setTitleColorPressed(orangeColor);
@@ -55,9 +65,10 @@ public class AnimationTabActivity extends AbsActivity {
         items.add(item);
 
         tabView.initItem(items);
+        tabView.setmModelNum(5);
         tabView.setOnItemClickListener(new ECallOnClick() {
             @Override
-            public void callOnClick(View view, AnimationTabItem item, int index) {
+            public void callOnClick(View view, Model item, int index) {
                 CommonUtil.showToast(item.getTitle());
             }
         });
@@ -65,7 +76,7 @@ public class AnimationTabActivity extends AbsActivity {
 
     @Override
     public int getLayoutID() {
-        return R.layout.activity_tabani;
+        return R.layout.activity_tabbar;
     }
 
 }

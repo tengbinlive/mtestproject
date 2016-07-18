@@ -1,4 +1,4 @@
-package com.example.bin.activity;
+package com.bin.bin.activity;
 
 import org.junit.Test;
 

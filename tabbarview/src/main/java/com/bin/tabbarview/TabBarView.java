@@ -1,4 +1,4 @@
-package com.bin.animationtabview;
+package com.bin.tabbarview;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -13,16 +13,21 @@ import android.widget.TextView;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorSet;
-import com.nineoldandroids.animation.ValueAnimator;
+import com.nineoldandroids.animation.ObjectAnimator;
+import com.nineoldandroids.animation.PropertyValuesHolder;
+import com.nineoldandroids.view.ViewHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AnimationTabView extends RelativeLayout {
+/**
+ * 设置 item 间隔位置的tab bar
+ */
+public class TabBarView extends RelativeLayout {
 
     private final OvershootInterpolator mInterpolator = new OvershootInterpolator();
     private boolean isAnimation = true; //是否支持动画 默认 true = 支持
-    private static final int titleDuration = 300;    //  动画时长
+    private static int duration = 300;    //  动画时长
 
     private Context mContext;
 
@@ -31,58 +36,81 @@ public class AnimationTabView extends RelativeLayout {
     private int itemLayoutIconId; // item icon id
     private int itemLayoutTitleId;// item title id
 
-    private List<AnimationTabItem> tabItems;
+    private List<Model> tabItems;
 
     private ECallOnClick onItemClickListener;
+
+    private int mModelSize;
+
+    private int mModelNum;
+
+    private int itemLayoutId;
+
+    /**
+     * item margin
+     */
+    private int itemMargin;
+
+    private boolean isBuild;
+
 
     public void setOnItemClickListener(ECallOnClick onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
-    public AnimationTabView(Context context, AttributeSet attrs) {
+    public TabBarView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        LayoutInflater.from(context).inflate(R.layout.ani_tab_layout, this, true);
+        LayoutInflater.from(context).inflate(R.layout.tabbar_layout, this, true);
 
         mContext = context;
 
     }
 
-    public void initItem(List<AnimationTabItem> items) {
-        initItem(items, R.layout.ani_tab_item_left, R.layout.ani_tab_item_right, R.id.tab_icon, R.id.tab_title);
+    public void initItem(List<Model> items, int index, int dimenID) {
+        initItem(items, R.layout.item_model, R.id.tab_icon, R.id.tab_title, dimenID);
+        setSelection(index);
+    }
+
+    public void initItem(List<Model> items, int dimenID) {
+        initItem(items, 0, dimenID);
+    }
+
+    public void initItem(List<Model> items) {
+        initItem(items, 0, 0);
     }
 
     /**
      * 初始化item
      *
      * @param items             item 集合
-     * @param itemLeftLayoutId  左边布局
-     * @param itemRightLayoutId 右边布局
+     * @param itemLayoutId      item布局
      * @param itemLayoutIconId  icon id
      * @param itemLayoutTitleId title id
+     * @param dimenID           margin_tab_item id
      */
-    public void initItem(List<AnimationTabItem> items, int itemLeftLayoutId, int itemRightLayoutId, int itemLayoutIconId, int itemLayoutTitleId) {
+    public void initItem(List<Model> items, int itemLayoutId, int itemLayoutIconId, int itemLayoutTitleId, int dimenID) {
         if (items == null) {
             return;
         }
-        int index = 0;
         this.itemLayoutIconId = itemLayoutIconId;
         this.itemLayoutTitleId = itemLayoutTitleId;
         this.tabItems = items;
+        this.itemMargin = dimenID;
+        this.itemLayoutId = itemLayoutId;
+    }
+
+    private void buildItem() {
+        int index = 0;
         this.removeAllViews();
         boolean leftAdd = false;//最左边是否已经有item
         boolean rightAdd = false;//最右边是否已经有item
-        int margin_tab_item = (int) mContext.getResources().getDimension(R.dimen.margin_tab_item);
-        for (final AnimationTabItem item : items) {
+        int margin_tab_item = itemMargin == 0 ? 0 : (int) mContext.getResources().getDimension(itemMargin);
+        for (final Model item : tabItems) {
             LinearLayout item_layout;
-            boolean isRight = item.getGravity() == AnimationTabItem.GRAVITY_RIGHT;
-
-            if (isRight) {
-                item_layout = (LinearLayout) LayoutInflater.from(mContext).inflate(itemRightLayoutId, this, false);
-            } else {
-                item_layout = (LinearLayout) LayoutInflater.from(mContext).inflate(itemLeftLayoutId, this, false);
-            }
-            setItemStatus(item, index == 0, item_layout, true);
+            boolean isRight = item.getGravity() == Model.GRAVITY_RIGHT;
+            item_layout = (LinearLayout) LayoutInflater.from(mContext).inflate(itemLayoutId, this, false);
+            setItemStatus(item, index == 0, item_layout);
             item_layout.setId(index + 1);//设置0 无效
             item_layout.setTag(index);
             item_layout.setOnClickListener(new OnClickListener() {
@@ -96,7 +124,7 @@ public class AnimationTabView extends RelativeLayout {
                 }
             });
 
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(mModelSize, RelativeLayout.LayoutParams.WRAP_CONTENT);
             params.setMargins(margin_tab_item, margin_tab_item, margin_tab_item, margin_tab_item);
 
             if (isRight && !rightAdd) {
@@ -108,7 +136,7 @@ public class AnimationTabView extends RelativeLayout {
             } else {
                 if (index > 0) {
                     int id = this.getChildAt(index - 1).getId();
-                    if (rightAdd && item.getGravity() == AnimationTabItem.GRAVITY_RIGHT) {
+                    if (rightAdd && item.getGravity() == Model.GRAVITY_RIGHT) {
                         params.addRule(RelativeLayout.LEFT_OF, id);
                     } else {
                         params.addRule(RelativeLayout.RIGHT_OF, id);
@@ -127,29 +155,27 @@ public class AnimationTabView extends RelativeLayout {
         }
         LinearLayout itemLayoutI = (LinearLayout) getChildAt(index);
         LinearLayout itemLayoutS = (LinearLayout) getChildAt(selection);
-
         setItemStatus(tabItems.get(index), true, itemLayoutI);
         setItemStatus(tabItems.get(selection), false, itemLayoutS);
-        startTitleAnimation(selection, index);
+        startAnimation(selection, index);
         selection = index;
     }
 
     /**
      * 开始动画
      *
-     * @param selection 需要关闭的 title view
-     * @param index     需要展开的 title view
+     * @param selection 需要关闭的  view
+     * @param index     需要展开的  view
      */
-    private void startTitleAnimation(int selection, int index) {
+    private void startAnimation(int selection, int index) {
         if (!isAnimation) {
             return;
         }
-        View expandView = getChildAt(index).findViewById(itemLayoutTitleId);
-        View closeView = getChildAt(selection).findViewById(itemLayoutTitleId);
+        View expandView = getChildAt(index);
+        View closeView = getChildAt(selection);
         List<Animator> animList = new ArrayList<>();
-        int width = closeView.getWidth();
-        animList.add(aniView(closeView, false, width));
-        animList.add(aniView(expandView, true, width));
+        animList.add(aniView(closeView, false));
+        animList.add(aniView(expandView, true));
         AnimatorSet animSet = new AnimatorSet();
         animSet.playTogether(animList);
         animSet.start();
@@ -161,32 +187,24 @@ public class AnimationTabView extends RelativeLayout {
      * @param is 动画状态 true = 展开 | false 关闭
      * @return
      */
-    private Animator aniView(View view, final boolean is, int width) {
-        float fromValue = is ? 0 : width;
-        float toValue = is ? width : 0;
-        Animator animator = createScaleAni(view, titleDuration, fromValue, toValue);
+    private Animator aniView(View view, final boolean is) {
+        float fromValue = is ? 1 : 1.05f;
+        float toValue = is ? 1.05f : 1;
+        Animator animator = createAni(view, duration, fromValue, toValue);
         animator.setInterpolator(mInterpolator);
         return animator;
     }
 
     // 创建 动画
-    private Animator createScaleAni(final View view, final int duration, final float fromValue, final float toValue) {
-        ValueAnimator animation = ValueAnimator.ofFloat(fromValue, toValue);
-        animation.setDuration(duration);
-        animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float value = (Float) animation.getAnimatedValue();
-                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
-                int width = (int) value;
-                if (width < 0) {
-                    width = 0;
-                }
-                params.width = width;
-                view.setLayoutParams(params);
-            }
-        });
-        return animation;
+    private Animator createAni(final View view, final int duration, final float fromValue, final float toValue) {
+        PropertyValuesHolder pvhX = PropertyValuesHolder.ofFloat("scaleX", fromValue, toValue);
+        PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("scaleY", fromValue, toValue);
+        ViewHelper.setPivotX(view, view.getWidth() >> 1);
+        ViewHelper.setPivotY(view, view.getHeight() >> 1);
+        ObjectAnimator animator2 = ObjectAnimator.ofPropertyValuesHolder(view, pvhX, pvhY).setDuration(300);
+        animator2.setInterpolator(mInterpolator);
+        animator2.setDuration(duration);
+        return animator2;
     }
 
     /**
@@ -196,19 +214,7 @@ public class AnimationTabView extends RelativeLayout {
      * @param isSelection 是否选中
      * @param itemLayout  item 布局
      */
-    private void setItemStatus(AnimationTabItem item, boolean isSelection, ViewGroup itemLayout) {
-        setItemStatus(item, isSelection, itemLayout, false);
-    }
-
-
-    /**
-     * 设置item 选中 状态
-     *
-     * @param item        item属性
-     * @param isSelection 是否选中
-     * @param itemLayout  item 布局
-     */
-    private void setItemStatus(AnimationTabItem item, boolean isSelection, ViewGroup itemLayout, boolean isInit) {
+    private void setItemStatus(Model item, boolean isSelection, ViewGroup itemLayout) {
         ImageView icon = (ImageView) itemLayout.findViewById(itemLayoutIconId);
         TextView title = (TextView) itemLayout.findViewById(itemLayoutTitleId);
         if (isSelection) {
@@ -217,14 +223,17 @@ public class AnimationTabView extends RelativeLayout {
         } else {
             icon.setImageResource(item.getIconNormal());
             title.setTextColor(item.getTitleColorNormal());
-            if (isInit)
-                title.setWidth(0);
         }
+        title.setTextSize(item.getTitleSize());
         title.setText(item.getTitle());
     }
 
-    public static int getTitleDuration() {
-        return titleDuration;
+    public static int getDuration() {
+        return duration;
+    }
+
+    public static void setDuration(int duration) {
+        TabBarView.duration = duration;
     }
 
     public boolean isAnimation() {
@@ -235,4 +244,44 @@ public class AnimationTabView extends RelativeLayout {
         isAnimation = animation;
     }
 
+    @Override
+    protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        // Get measure size
+        final int width = MeasureSpec.getSize(widthMeasureSpec);
+        final int height = MeasureSpec.getSize(heightMeasureSpec);
+
+        if (tabItems.isEmpty() || width == 0 || height == 0) return;
+
+
+        if (mModelNum <= 0) {
+            // Get model size
+            mModelSize = width / tabItems.size();
+        } else {
+            mModelSize = width / mModelNum;
+        }
+
+        if (!isBuild) {
+            isBuild = true;
+            buildItem();
+        }
+
+    }
+
+    public int getmModelNum() {
+        return mModelNum;
+    }
+
+    public void setmModelNum(int mModelNum) {
+        this.mModelNum = mModelNum;
+    }
+
+    public int getItemMargin() {
+        return itemMargin;
+    }
+
+    public void setItemMargin(int itemMargin) {
+        this.itemMargin = itemMargin;
+    }
 }

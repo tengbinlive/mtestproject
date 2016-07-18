@@ -1,4 +1,4 @@
-package com.bin.animationtabview;
+package com.binteng.activity;
 
 
 import com.nineoldandroids.animation.PropertyValuesHolder;
