@@ -6,7 +6,7 @@
 
     dependencies {
 
-          compile 'com.bin:tabbarview:1.0.4'
+          compile 'com.bin:tabbarview:1.0.5'
 
     }
 
@@ -15,7 +15,7 @@
     <dependency>
       <groupId>com.bin</groupId>
       <artifactId>tabbarview</artifactId>
-      <version>1.0.4</version>
+      <version>1.0.5</version>
       <type>pom</type>
     </dependency>
 
