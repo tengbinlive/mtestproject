@@ -33,6 +33,12 @@ public class AnimationSearchView extends RelativeLayout {
     //textIcon 动画移动偏移量
     private static int iconOfferY = 0;
 
+    private String editStr = "";
+
+    public String getEditStr() {
+        return editStr;
+    }
+
     private OnSearchAnimationChange animationChange;
 
     public void setAnimationChange(OnSearchAnimationChange animationChange) {
@@ -80,14 +86,8 @@ public class AnimationSearchView extends RelativeLayout {
         searchEt.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus && isAnimation) {
-                    if (!isAnimationOpen) {
-                        startAnimation(true);
-                        if (null != animationChange) {
-                            animationChange.openAni();
-                        }
-                        isAnimationOpen = true;
-                    }
+                if (hasFocus) {
+                    openAnimation();
                 }
             }
         });
@@ -197,7 +197,12 @@ public class AnimationSearchView extends RelativeLayout {
         }
         if (!isAnimationOpen) {
             startAnimation(true);
+            if (null != animationChange) {
+                animationChange.openAni();
+            }
             isAnimationOpen = true;
+            searchEt.setText(editStr);
+            searchEt.setSelection(editStr.length());
         }
     }
 
@@ -215,6 +220,8 @@ public class AnimationSearchView extends RelativeLayout {
             }
             isAnimationOpen = false;
             searchEt.clearFocus();
+            editStr = searchEt.getText().toString();
+            searchEt.setText("");
         }
     }
 
