@@ -2,7 +2,6 @@ package com.bin;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.EditText;
@@ -34,10 +33,20 @@ public class AnimationSearchView extends RelativeLayout {
     //textIcon 动画移动偏移量
     private static int iconOfferY = 0;
 
+    private OnSearchAnimationChange animationChange;
+
+    public void setAnimationChange(OnSearchAnimationChange animationChange) {
+        this.animationChange = animationChange;
+    }
+
+    public EditText getSearchEt() {
+        return searchEt;
+    }
+
     public AnimationSearchView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        LayoutInflater.from(context).inflate(R.layout.ani_search_layout, this, true);
+        inflate(context, R.layout.ani_search_layout, this);
 
         init();
     }
@@ -74,6 +83,9 @@ public class AnimationSearchView extends RelativeLayout {
                 if (hasFocus && isAnimation) {
                     if (!isAnimationOpen) {
                         startAnimation(true);
+                        if (null != animationChange) {
+                            animationChange.openAni();
+                        }
                         isAnimationOpen = true;
                     }
                 }
@@ -198,9 +210,11 @@ public class AnimationSearchView extends RelativeLayout {
         }
         if (isAnimationOpen) {
             startAnimation(false);
+            if (null != animationChange) {
+                animationChange.closeAni();
+            }
             isAnimationOpen = false;
             searchEt.clearFocus();
-            searchEt.setText("");
         }
     }
 
@@ -322,6 +336,12 @@ public class AnimationSearchView extends RelativeLayout {
         AnimatorSet animSet = new AnimatorSet();
         animSet.playTogether(animList);
         animSet.start();
+    }
+
+    public interface OnSearchAnimationChange {
+        void openAni();
+
+        void closeAni();
     }
 
 }
