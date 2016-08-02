@@ -42,7 +42,7 @@ public class AnimationTabView extends RelativeLayout {
     public AnimationTabView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        LayoutInflater.from(context).inflate(R.layout.ani_tab_layout, this, true);
+        inflate(context, R.layout.ani_tab_layout, this);
 
         mContext = context;
 

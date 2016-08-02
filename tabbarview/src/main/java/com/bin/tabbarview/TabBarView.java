@@ -60,7 +60,7 @@ public class TabBarView extends RelativeLayout {
     public TabBarView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        LayoutInflater.from(context).inflate(R.layout.tabbar_layout, this, true);
+        inflate(context, R.layout.tabbar_layout, this);
 
         mContext = context;
 
@@ -109,7 +109,7 @@ public class TabBarView extends RelativeLayout {
             int anchor = item.getAnchor();
             item_layout = (LinearLayout) LayoutInflater.from(mContext).inflate(itemLayoutId, this, false);
             setItemStatus(item, index == 0, item_layout);
-            item_layout.setId(index+1);
+            item_layout.setId(index + 1);
             item_layout.setTag(index);
             item_layout.setOnClickListener(new OnClickListener() {
                 @Override
@@ -139,8 +139,8 @@ public class TabBarView extends RelativeLayout {
         if (selection == index) {
             return;
         }
-        LinearLayout itemLayoutI = (LinearLayout) getChildAt(index);
-        LinearLayout itemLayoutS = (LinearLayout) getChildAt(selection);
+        ViewGroup itemLayoutI = (ViewGroup) getChildAt(index);
+        ViewGroup itemLayoutS = (ViewGroup) getChildAt(selection);
         setItemStatus(tabItems.get(index), true, itemLayoutI);
         setItemStatus(tabItems.get(selection), false, itemLayoutS);
         startAnimation(selection, index);
