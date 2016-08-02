@@ -21,6 +21,18 @@ public class AnimationSeachActivity extends AbsActivity {
                 super.onTextChanged(s, start, before, count);
             }
         });
+
+        searchView.setAnimationChange(new AnimationSearchView.OnSearchAnimationChange() {
+            @Override
+            public void openAni() {
+
+            }
+
+            @Override
+            public void closeAni() {
+
+            }
+        });
     }
 
     @Override

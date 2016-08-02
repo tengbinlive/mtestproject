@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:focusable="true"
-    android:focusableInTouchMode="true">
+    android:layout_height="wrap_content">
 
     <EditText
         android:id="@+id/search_edit"
@@ -13,9 +11,9 @@
         android:background="@drawable/search_content_bg"
         android:gravity="center"
         android:imeOptions="actionSearch"
-        android:singleLine="true"
         android:inputType="text"
         android:padding="@dimen/search_padding"
+        android:singleLine="true"
         android:tag="search input text"
         android:textColor="@android:color/darker_gray"
         android:textCursorDrawable="@null"
@@ -31,8 +29,8 @@
         android:gravity="center"
         android:lines="1"
         android:tag="search title"
-        android:textColor="@android:color/darker_gray"
         android:text="@string/search"
+        android:textColor="@android:color/darker_gray"
         android:textSize="@dimen/search_text_size" />
 
     <ImageView

@@ -10,7 +10,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nineoldandroids.animation.Animator;
-import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.animation.ValueAnimator;
@@ -84,6 +83,9 @@ public class AnimationSearchView extends RelativeLayout {
                 if (hasFocus && isAnimation) {
                     if (!isAnimationOpen) {
                         startAnimation(true);
+                        if (null != animationChange) {
+                            animationChange.openAni();
+                        }
                         isAnimationOpen = true;
                     }
                 }
@@ -208,6 +210,9 @@ public class AnimationSearchView extends RelativeLayout {
         }
         if (isAnimationOpen) {
             startAnimation(false);
+            if (null != animationChange) {
+                animationChange.closeAni();
+            }
             isAnimationOpen = false;
             searchEt.clearFocus();
         }
@@ -330,19 +335,6 @@ public class AnimationSearchView extends RelativeLayout {
         animList.add(aniSearchTitle(is));
         AnimatorSet animSet = new AnimatorSet();
         animSet.playTogether(animList);
-        animSet.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                if (null != animationChange) {
-                    if (is) {
-                        animationChange.openAni();
-                    } else {
-                        animationChange.closeAni();
-                    }
-                }
-            }
-        });
         animSet.start();
     }
 

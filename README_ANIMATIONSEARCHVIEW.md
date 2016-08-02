@@ -6,7 +6,7 @@
 
     dependencies {
 
-          compile 'com.bin:animationsearchview:1.1.3'
+          compile 'com.bin:animationsearchview:1.1.5'
 
     }
 
@@ -15,17 +15,23 @@
     <dependency>
       <groupId>com.bin</groupId>
       <artifactId>animationsearchview</artifactId>
-      <version>1.1.3</version>
+      <version>1.1.5</version>
       <type>pom</type>
     </dependency>
 
 #### xml
 
-    <com.bin.AnimationSearchView
+    <RelativeLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <com.bin.AnimationSearchView
             android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_margin="@dimen/search_margin"
             android:layout_height="match_parent" />
+            
+    </RelativeLayout>
 
 
 #### listener
