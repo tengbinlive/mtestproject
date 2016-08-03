@@ -16,7 +16,7 @@ public class AnimationSearchActivity extends AbsActivity {
     public void initData() {
         super.initData();
         searchView.setSearchTitle(R.string.search_title);
-        searchView.setSearchHint(R.string.search_hint);
+        searchView.setSearchHint(R.string.search_title);
         searchView.addTextChangedListener(new TextWatcherAdapter() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {

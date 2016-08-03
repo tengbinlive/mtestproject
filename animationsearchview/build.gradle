@@ -7,7 +7,7 @@ android {
     defaultConfig {
         minSdkVersion 13
         targetSdkVersion 23
-        versionCode 20
+        versionCode 21
         versionName PROJ_VERSION
     }
 

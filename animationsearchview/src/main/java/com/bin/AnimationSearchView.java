@@ -309,9 +309,12 @@ public class AnimationSearchView extends RelativeLayout {
     private Animator aniSearchIcon(final boolean is) {
         //只记录一次
         if (iconOffer <= 0) {
-            int viewWidth = (int) (searchIcon.getWidth() + EDITEXT_OFFER);
-            iconOffer = searchEt.getWidth() + viewWidth >> 1;
-            searchEt.setPadding(searchPadding, searchPadding, viewWidth, searchPadding);
+            int searchIconWidth = searchIcon.getWidth();
+            int searchEtWidth = searchEt.getWidth();
+            int paddingRight = searchIconWidth + (int) EDITEXT_OFFER;
+            int viewWidth = searchIconWidth+searchTitle.getWidth()>>1;
+            iconOffer = searchEtWidth - ((searchEtWidth>>1)-viewWidth) - ((int) EDITEXT_OFFER<<1);
+            searchEt.setPadding(searchPadding, searchPadding, paddingRight, searchPadding);
         }
         return createTranslationXAni(searchIcon, iconDuration, is ? iconOffer : 0);
     }
