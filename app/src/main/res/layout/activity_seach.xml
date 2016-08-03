@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context=".activity.AnimationSeachActivity">
+    tools:context=".activity.AnimationSearchActivity">
 
     <com.bin.AnimationSearchView
         android:id="@+id/searchView"

@@ -7,7 +7,7 @@ android {
     defaultConfig {
         minSdkVersion 13
         targetSdkVersion 23
-        versionCode 18
+        versionCode 19
         versionName PROJ_VERSION
     }
 
@@ -29,3 +29,5 @@ dependencies {
 
 }
 
+apply plugin: 'com.jfrog.bintray'
+apply from: 'bintray.gradle'

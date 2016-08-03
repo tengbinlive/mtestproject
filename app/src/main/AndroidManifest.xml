@@ -22,7 +22,7 @@
 
         <activity android:name=".activity.AnimationLaunchActivity" />
 
-        <activity android:name=".activity.AnimationSeachActivity" />
+        <activity android:name=".activity.AnimationSearchActivity" />
 
         <activity android:name=".activity.AudioFrequencyActivity" />
 

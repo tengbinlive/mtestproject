@@ -35,6 +35,8 @@ public class AnimationSearchView extends RelativeLayout {
 
     private String editStr = "";
 
+    private int editHintStr;
+
     public String getEditStr() {
         return editStr;
     }
@@ -118,7 +120,16 @@ public class AnimationSearchView extends RelativeLayout {
      * @param res_string string 资源id
      */
     public void setSearchTitle(int res_string) {
-        searchTitle.setTextColor(res_string);
+        searchTitle.setText(res_string);
+    }
+
+    /**
+     * 搜索框提示内容
+     *
+     * @param res_string string 资源id
+     */
+    public void setSearchHint(int res_string) {
+        editHintStr = res_string;
     }
 
     /**
@@ -201,6 +212,9 @@ public class AnimationSearchView extends RelativeLayout {
                 animationChange.openAni();
             }
             isAnimationOpen = true;
+            if (editHintStr > 0) {
+                searchEt.setHint(editHintStr);
+            }
             searchEt.setText(editStr);
             searchEt.setSelection(editStr.length());
         }
@@ -221,6 +235,7 @@ public class AnimationSearchView extends RelativeLayout {
             isAnimationOpen = false;
             searchEt.clearFocus();
             editStr = searchEt.getText().toString();
+            searchEt.setHint("");
             searchEt.setText("");
         }
     }
