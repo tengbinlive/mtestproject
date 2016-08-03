@@ -31,9 +31,11 @@ public class AnimationSearchView extends RelativeLayout {
     private int editDuration = 400;    //输入框 动画时长
     private int titleDuration = 200;    //title 动画时长
     //textIcon 动画移动偏移量
-    private static int iconOfferY = 0;
+    private static int iconOffer = 0;
 
     private String editStr = "";
+
+    private int searchPadding;
 
     private int editHintStr;
 
@@ -70,6 +72,7 @@ public class AnimationSearchView extends RelativeLayout {
      */
     private void initData() {
         EDITEXT_OFFER = getResources().getDimension(R.dimen.search_animation_offer);
+        searchPadding = (int) getResources().getDimension(R.dimen.search_padding);
     }
 
     /**
@@ -216,7 +219,6 @@ public class AnimationSearchView extends RelativeLayout {
                 searchEt.setHint(editHintStr);
             }
             searchEt.setText(editStr);
-            searchEt.setSelection(editStr.length());
         }
     }
 
@@ -306,10 +308,12 @@ public class AnimationSearchView extends RelativeLayout {
      */
     private Animator aniSearchIcon(final boolean is) {
         //只记录一次
-        if (iconOfferY <= 0) {
-            iconOfferY = (searchEt.getWidth() >> 1);
+        if (iconOffer <= 0) {
+            int viewWidth = (int) (searchIcon.getWidth() + EDITEXT_OFFER);
+            iconOffer = searchEt.getWidth() + viewWidth >> 1;
+            searchEt.setPadding(searchPadding, searchPadding, viewWidth, searchPadding);
         }
-        return createTranslationXAni(searchIcon, iconDuration, is ? iconOfferY : 0);
+        return createTranslationXAni(searchIcon, iconDuration, is ? iconOffer : 0);
     }
 
     /**

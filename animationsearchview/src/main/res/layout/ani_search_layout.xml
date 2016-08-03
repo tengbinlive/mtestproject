@@ -13,7 +13,7 @@
         android:imeOptions="actionSearch"
         android:inputType="text"
         android:padding="@dimen/search_padding"
-        android:singleLine="true"
+        android:maxLines="1"
         android:tag="search input text"
         android:textColor="@android:color/darker_gray"
         android:textCursorDrawable="@null"
