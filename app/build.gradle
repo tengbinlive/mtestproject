@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.binteng"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 23
         versionCode 4
         versionName "1.1.2"
@@ -29,6 +29,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.0.1'
     compile 'com.karumi:dexter:2.2.2'
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
+    compile 'com.boqii.android.framework:image:1.0.1@aar'
     compile project(path: ':animationtabview')
     compile project(path: ':tabbarview')
 }

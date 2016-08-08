@@ -1,7 +1,7 @@
 package com.binteng.activity;
 
-import com.bin.AnimationSearchView;
-import com.bin.TextWatcherAdapter;
+import com.utils.AnimationSearchView;
+import com.utils.TextWatcherAdapter;
 import com.binteng.AbsActivity;
 import com.binteng.R;
 

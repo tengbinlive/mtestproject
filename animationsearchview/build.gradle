@@ -28,6 +28,3 @@ dependencies {
     compile 'com.nineoldandroids:library:2.4.0'
 
 }
-
-apply plugin: 'com.jfrog.bintray'
-apply from: 'bintray.gradle'

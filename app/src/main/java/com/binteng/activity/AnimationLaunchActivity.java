@@ -9,7 +9,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.BounceInterpolator;
 import android.widget.ImageView;
 
-import com.bin.AnimatorUtils;
+import com.utils.AnimatorUtils;
 import com.binteng.AbsActivity;
 import com.binteng.R;
 import com.binteng.mview.ClipRevealFrame;
