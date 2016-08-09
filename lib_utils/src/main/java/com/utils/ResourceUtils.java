@@ -109,7 +109,7 @@ public class ResourceUtils {
 
     /**
      * 获取Raw下的文件内容
-     * same to {@link com.utils.ResourceUtils#geFileFromRawAsString(Context, int)}, but return type is List<String>
+     * same to {@link ResourceUtils#geFileFromRawAsString(Context, int)}, but return type is List<String>
      *
      * @param context
      * @param resId

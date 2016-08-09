@@ -1,4 +1,4 @@
-package com.utils;
+package com.bin;
 
 import android.content.Context;
 import android.util.AttributeSet;

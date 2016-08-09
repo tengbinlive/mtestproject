@@ -702,7 +702,7 @@ public final class FileUtils {
      * @return true if the necessary directories have been created or the target directory already exists, false one of
      * the directories can not be created.
      * <ul>
-     * <li>if {@link com.utils.FileUtils#getFolderName(String)} return null, return false</li>
+     * <li>if {@link FileUtils#getFolderName(String)} return null, return false</li>
      * <li>if target directory already exists, return true</li>
      * </ul>
      */
@@ -719,7 +719,7 @@ public final class FileUtils {
     /**
      * 创建文件夹
      * makeDirs 和 makeFolder 有区别！
-     * see {@link com.utils.FileUtils#makeDirs(String)}
+     * see {@link FileUtils#makeDirs(String)}
      *
      * @param filePath
      * @return

@@ -1,4 +1,4 @@
-package com.utils.tabbarview;
+package com.bin.tabbarview;
 
 import android.view.View;
 

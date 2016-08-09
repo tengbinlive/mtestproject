@@ -1,4 +1,4 @@
-package com.utils.animationtabview;
+package com.bin.animationtabview;
 
 import android.view.View;
 

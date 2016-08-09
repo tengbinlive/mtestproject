@@ -1,4 +1,4 @@
-package com.utils;
+package com.bin;
 
 import android.text.Editable;
 import android.text.TextWatcher;

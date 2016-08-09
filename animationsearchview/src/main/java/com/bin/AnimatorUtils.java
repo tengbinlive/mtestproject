@@ -1,4 +1,4 @@
-package com.utils;
+package com.bin;
 
 
 import com.nineoldandroids.animation.PropertyValuesHolder;

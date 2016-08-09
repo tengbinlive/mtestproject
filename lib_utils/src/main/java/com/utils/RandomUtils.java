@@ -26,7 +26,7 @@ public class RandomUtils {
      *
      * @param length
      * @return
-     * @see com.utils.RandomUtils#getRandom(String source, int length)
+     * @see RandomUtils#getRandom(String source, int length)
      */
     public static String getRandomNumbersAndLetters(int length) {
         return getRandom(NUMBERS_AND_LETTERS, length);
@@ -38,7 +38,7 @@ public class RandomUtils {
      *
      * @param length
      * @return
-     * @see com.utils.RandomUtils#getRandom(String source, int length)
+     * @see RandomUtils#getRandom(String source, int length)
      */
     public static String getRandomNumbers(int length) {
         return getRandom(NUMBERS, length);
@@ -50,7 +50,7 @@ public class RandomUtils {
      *
      * @param length
      * @return
-     * @see com.utils.RandomUtils#getRandom(String source, int length)
+     * @see RandomUtils#getRandom(String source, int length)
      */
     public static String getRandomLetters(int length) {
         return getRandom(LETTERS, length);
@@ -62,7 +62,7 @@ public class RandomUtils {
      *
      * @param length
      * @return
-     * @see com.utils.RandomUtils#getRandom(String source, int length)
+     * @see RandomUtils#getRandom(String source, int length)
      */
     public static String getRandomCapitalLetters(int length) {
         return getRandom(CAPITAL_LETTERS, length);
@@ -74,7 +74,7 @@ public class RandomUtils {
      *
      * @param length
      * @return
-     * @see com.utils.RandomUtils#getRandom(String source, int length)
+     * @see RandomUtils#getRandom(String source, int length)
      */
     public static String getRandomLowerCaseLetters(int length) {
         return getRandom(LOWER_CASE_LETTERS, length);
@@ -88,7 +88,7 @@ public class RandomUtils {
      * @param length
      * @return <ul>
      * <li>if source is null or empty, return null</li>
-     * <li>else see {@link com.utils.RandomUtils#getRandom(char[] sourceChar, int length)}</li>
+     * <li>else see {@link RandomUtils#getRandom(char[] sourceChar, int length)}</li>
      * </ul>
      */
     public static String getRandom(String source, int length) {

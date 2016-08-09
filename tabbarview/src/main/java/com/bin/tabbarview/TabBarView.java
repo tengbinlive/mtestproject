@@ -1,4 +1,4 @@
-package com.utils.tabbarview;
+package com.bin.tabbarview;
 
 import android.content.Context;
 import android.util.AttributeSet;

@@ -2,9 +2,9 @@ package com.binteng.activity;
 
 import android.view.View;
 
-import com.utils.animationtabview.AnimationTabItem;
-import com.utils.animationtabview.AnimationTabView;
-import com.utils.animationtabview.ECallOnClick;
+import com.bin.animationtabview.AnimationTabItem;
+import com.bin.animationtabview.AnimationTabView;
+import com.bin.animationtabview.ECallOnClick;
 import com.binteng.AbsActivity;
 import com.binteng.R;
 import com.binteng.tools.CommonUtil;

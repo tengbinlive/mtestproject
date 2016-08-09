@@ -12,7 +12,7 @@
     android:focusableInTouchMode="true"
     tools:context=".activity.AnimationSearchActivity">
 
-    <com.utils.AnimationSearchView
+    <com.bin.AnimationSearchView
         android:id="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_margin="@dimen/search_margin"

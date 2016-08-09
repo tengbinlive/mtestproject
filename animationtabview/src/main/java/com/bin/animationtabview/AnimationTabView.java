@@ -1,4 +1,4 @@
-package com.utils.animationtabview;
+package com.bin.animationtabview;
 
 import android.content.Context;
 import android.util.AttributeSet;

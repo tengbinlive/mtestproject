@@ -6,7 +6,7 @@
     android:background="@color/colorAccent"
     tools:context=".activity.AnimationTabActivity">
 
-    <com.utils.tabbarview.TabBarView
+    <com.bin.tabbarview.TabBarView
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="65dp"
