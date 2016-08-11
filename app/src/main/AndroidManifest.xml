@@ -31,6 +31,8 @@
         <activity android:name=".activity.AnimationTabActivity" />
 
         <activity android:name=".activity.TabBarActivity" />
+
+        <activity android:name=".activity.UtilActivity" />
     </application>
 
 </manifest>

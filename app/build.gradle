@@ -32,4 +32,5 @@ dependencies {
     compile 'com.boqii.android.framework:image:1.0.1@aar'
     compile project(path: ':animationtabview')
     compile project(path: ':tabbarview')
+    compile project(path: ':lib_utils')
 }

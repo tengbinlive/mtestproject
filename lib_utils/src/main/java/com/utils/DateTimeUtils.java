@@ -1,10 +1,12 @@
 package com.utils;
 
 import java.text.ParseException;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by bin.teng on 6/29/16.
@@ -19,6 +21,8 @@ public class DateTimeUtils {
      * 英文简写（默认）如：2010-12-01
      */
     public static String FORMAT_SHORT = "yyyy-MM-dd";
+
+    public static String FORMAT_ISO8601 = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     /**
      * 英文全称 如：2010-12-01 23:15:06
      */
@@ -55,7 +59,7 @@ public class DateTimeUtils {
      * 获得默认的 date pattern
      */
     private static String getDatePattern() {
-        return FORMAT_LONG;
+        return FORMAT_ISO8601;
     }
 
     /**
@@ -104,6 +108,25 @@ public class DateTimeUtils {
         return (returnValue);
     }
 
+
+    /**
+     * 使用用户格式格式化日期
+     * 中文
+     *
+     * @param date    日期
+     * @param pattern 日期格式
+     * @return
+     */
+    public static String format(String date, String pattern) {
+        String returnValue = "";
+        if (date != null) {
+            SimpleDateFormat df = new SimpleDateFormat(pattern, Locale.CHINA);
+            returnValue = df.format(date);
+        }
+        return (returnValue);
+    }
+
+
     /**
      * 使用用户格式格式化日期
      * 英文
@@ -122,12 +145,29 @@ public class DateTimeUtils {
     }
 
     /**
+     * 使用用户格式格式化日期
+     * 英文
+     *
+     * @param dateStr    日期
+     * @param pattern 日期格式
+     * @return
+     */
+    public static String formatEN(String dateStr, String pattern) {
+        String returnValue = "";
+        if (StringUtils.isNotBlank(dateStr)) {
+            Date date = parse(dateStr) ;
+            returnValue = formatEN(date,pattern);
+        }
+        return (returnValue);
+    }
+
+    /**
      * 使用预设格式提取字符串日期
      *
      * @param strDate 日期字符串
      * @return
      */
-    private static Date parse(String strDate) {
+    public static Date parse(String strDate) {
         return parse(strDate, getDatePattern());
     }
 
@@ -138,7 +178,7 @@ public class DateTimeUtils {
      * @param pattern 日期格式
      * @return
      */
-    private static Date parse(String strDate, String pattern) {
+    public static Date parse(String strDate, String pattern) {
         SimpleDateFormat df = new SimpleDateFormat(pattern, Locale.CHINA);
         try {
             return df.parse(strDate);
