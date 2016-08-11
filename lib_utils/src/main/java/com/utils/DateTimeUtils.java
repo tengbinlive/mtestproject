@@ -162,6 +162,24 @@ public class DateTimeUtils {
     }
 
     /**
+     * 使用用户格式格式化日期
+     * 英文
+     *
+     * @param dateStr    日期
+     * @param sourcePattern 日期格式 来源
+     * @param targetPattern 日期格式 目标
+     * @return
+     */
+    public static String formatEN(String dateStr,String sourcePattern ,String targetPattern) {
+        String returnValue = "";
+        if (StringUtils.isNotBlank(dateStr)) {
+            Date date = parse(dateStr,sourcePattern) ;
+            returnValue = formatEN(date,targetPattern);
+        }
+        return (returnValue);
+    }
+
+    /**
      * 使用预设格式提取字符串日期
      *
      * @param strDate 日期字符串
