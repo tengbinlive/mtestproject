@@ -1,22 +1,17 @@
 package com.binteng.activity;
 
-import android.view.View;
+import android.widget.TextView;
 
-import com.bin.animationtabview.AnimationTabItem;
-import com.bin.animationtabview.AnimationTabView;
-import com.bin.animationtabview.ECallOnClick;
 import com.binteng.AbsActivity;
 import com.binteng.R;
-import com.binteng.tools.CommonUtil;
 import com.utils.DateTimeUtils;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import butterknife.BindView;
 
 public class UtilActivity extends AbsActivity {
+
+    @BindView(R.id.time_iso8601)
+    TextView timeIso8601;
 
     @Override
     public void initData() {
@@ -24,10 +19,10 @@ public class UtilActivity extends AbsActivity {
         testTime();
     }
 
-    private void testTime(){
+    private void testTime() {
         String dateStr = "2016-08-11T16:11:05.733Z";
-        Date date = DateTimeUtils.parse(dateStr);
-        String str = DateTimeUtils.formatEN(dateStr,DateTimeUtils.FORMAT_SHORT_EN);
+        String str = DateTimeUtils.formatDateTime(dateStr, DateTimeUtils.FORMAT_ISO8601);
+        timeIso8601.setText(str);
     }
 
     @Override

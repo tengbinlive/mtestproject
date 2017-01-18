@@ -1,1 +1,1 @@
-include ':app', ':animationtabview', ':animationsearchview', ':tabbarview', ':lib_utils'
+include ':app', ':animationtabview', ':animationsearchview', ':tabbarview', ':lib_utils', ':slideheadview'

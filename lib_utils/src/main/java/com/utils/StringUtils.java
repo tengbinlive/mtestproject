@@ -1,6 +1,7 @@
 package com.utils;
 
 
+import android.text.Html;
 import android.text.TextUtils;
 
 import java.io.UnsupportedEncodingException;
@@ -67,6 +68,16 @@ public class StringUtils {
 
     public static boolean isBlank(Long str) {
         return str == null;
+    }
+
+    /**
+     * * StringUtils.isNotBlank("  bob  ") = true
+     *
+     * @param str
+     * @return
+     */
+    public static boolean isNotBlank(String[] str) {
+        return null != str && str.length > 0;
     }
 
     /**
@@ -170,6 +181,19 @@ public class StringUtils {
             }
         }
         return str;
+    }
+
+    /**
+     * 获取html排版字符中 纯字符内容
+     *
+     * @param source
+     * @return
+     */
+    public static String htmlToString(String source) {
+        if (StringUtils.isBlank(source)) {
+            return "";
+        }
+        return Html.fromHtml(source).toString();
     }
 
     /**
@@ -577,6 +601,9 @@ public class StringUtils {
      * @return 合法返回true, 否则返回false
      */
     public static boolean checkMobile(String str) {
+        if (isBlank(str)) {
+            return false;
+        }
         Pattern p = Pattern.compile("1[34578][0-9]{9}");
         Matcher m = p.matcher(str);
         return m.matches();
@@ -589,6 +616,9 @@ public class StringUtils {
      * @return 合法返回true, 否则返回false
      */
     public static boolean checkMobileWithCountry(String str) {
+        if (isBlank(str)) {
+            return false;
+        }
         Pattern p = Pattern.compile("(\\+86)?1[34578][0-9]{9}");
         Matcher m = p.matcher(str);
         return m.matches();
@@ -601,6 +631,9 @@ public class StringUtils {
      * @return
      */
     public static boolean checkNickName(String str) {
+        if (isBlank(str)) {
+            return false;
+        }
         Pattern p = Pattern.compile("^[\\w+$\u4e00-\u9fa5]+$");
         Matcher m = p.matcher(str);
         return m.matches();
@@ -613,6 +646,9 @@ public class StringUtils {
      * @return
      */
     public static boolean checkPassword(String str) {
+        if (isBlank(str)) {
+            return false;
+        }
         Pattern p = Pattern.compile("^[\\w+$]{6,20}+$");
         Matcher m = p.matcher(str);
         return m.matches();
@@ -625,6 +661,9 @@ public class StringUtils {
      * @return
      */
     public static boolean checkEmail(String emailStr) {
+        if (isBlank(emailStr)) {
+            return false;
+        }
         String check = "^([a-z0-9A-Z]+[-|._]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?.)+[a-zA-Z]{2,}$";
         Pattern regex = Pattern.compile(check);
         Matcher matcher = regex.matcher(emailStr.trim());

@@ -33,6 +33,8 @@
         <activity android:name=".activity.TabBarActivity" />
 
         <activity android:name=".activity.UtilActivity" />
+
+        <activity android:name=".activity.SlideHeadViewActivity" />
     </application>
 
 </manifest>

@@ -201,6 +201,9 @@ public class TabBarView extends RelativeLayout {
      * @param itemLayout  item 布局
      */
     private void setItemStatus(Model item, boolean isSelection, ViewGroup itemLayout) {
+        if(null==itemLayout){
+            return;
+        }
         ImageView icon = (ImageView) itemLayout.findViewById(itemLayoutIconId);
         TextView title = (TextView) itemLayout.findViewById(itemLayoutTitleId);
         if (isSelection) {

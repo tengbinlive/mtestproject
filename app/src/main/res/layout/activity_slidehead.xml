@@ -7,11 +7,5 @@
     tools:context=".activity.AnimationTabActivity">
 
 
-    <TextView
-        android:id="@+id/time_iso8601"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:layout_margin="@dimen/margin_16" />
 
 </RelativeLayout>

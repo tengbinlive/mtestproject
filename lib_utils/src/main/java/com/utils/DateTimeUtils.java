@@ -1,7 +1,6 @@
 package com.utils;
 
 import java.text.ParseException;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -20,11 +19,11 @@ public class DateTimeUtils {
     /**
      * 英文简写（默认）如：2010-12-01
      */
-    public static String FORMAT_SHORT = "yyyy-MM-dd";
+    public static final String FORMAT_SHORT = "yyyy-MM-dd";
 
-    public static String FORMAT_ISO8601 = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+    public static final String FORMAT_ISO8601 = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     /**
-     * 英文全称 如：2010-12-01 23:15:06
+     * 英文简写 如：2010-12-01 23:15:06
      */
     public static final String FORMAT_MD_HM = "MM-dd HH:mm";
     /**
@@ -53,6 +52,12 @@ public class DateTimeUtils {
      * 精确到毫秒的完整中文时间
      */
     public static String FORMAT_FULL_CN = "yyyy年MM月dd日  HH时mm分ss秒SSS毫秒";
+
+
+    /**
+     * 精确到毫秒的完整中文时间
+     */
+    public static final String[] CN_NUM = new String[]{"零", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十"};
 
 
     /**
@@ -139,6 +144,8 @@ public class DateTimeUtils {
         String returnValue = "";
         if (date != null) {
             SimpleDateFormat df = new SimpleDateFormat(pattern, Locale.ENGLISH);
+            TimeZone tz = TimeZone.getTimeZone("ETC/GMT-8");
+            df.setTimeZone(tz);
             returnValue = df.format(date);
         }
         return (returnValue);
@@ -148,15 +155,15 @@ public class DateTimeUtils {
      * 使用用户格式格式化日期
      * 英文
      *
-     * @param dateStr    日期
+     * @param dateStr 日期
      * @param pattern 日期格式
      * @return
      */
     public static String formatEN(String dateStr, String pattern) {
         String returnValue = "";
         if (StringUtils.isNotBlank(dateStr)) {
-            Date date = parse(dateStr) ;
-            returnValue = formatEN(date,pattern);
+            Date date = parse(dateStr);
+            returnValue = formatEN(date, pattern);
         }
         return (returnValue);
     }
@@ -165,16 +172,16 @@ public class DateTimeUtils {
      * 使用用户格式格式化日期
      * 英文
      *
-     * @param dateStr    日期
+     * @param dateStr       日期
      * @param sourcePattern 日期格式 来源
      * @param targetPattern 日期格式 目标
      * @return
      */
-    public static String formatEN(String dateStr,String sourcePattern ,String targetPattern) {
+    public static String formatEN(String dateStr, String sourcePattern, String targetPattern) {
         String returnValue = "";
         if (StringUtils.isNotBlank(dateStr)) {
-            Date date = parse(dateStr,sourcePattern) ;
-            returnValue = formatEN(date,targetPattern);
+            Date date = parse(dateStr, sourcePattern);
+            returnValue = formatEN(date, targetPattern);
         }
         return (returnValue);
     }
@@ -249,7 +256,7 @@ public class DateTimeUtils {
      * @param date 日期
      * @return
      */
-    public static int getTimeSpecific(Date date,int field) {
+    public static int getTimeSpecific(Date date, int field) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         return calendar.get(field);
@@ -279,6 +286,64 @@ public class DateTimeUtils {
         return (int) (t / 1000 - t1 / 1000) / 3600 / 24;
     }
 
+
+    /**
+     * 按默认格式的字符串距离今天的小时
+     *
+     * @param date 日期字符串
+     * @return
+     */
+    public static int countHours(String date) {
+        long t = Calendar.getInstance().getTime().getTime();
+        Calendar c = Calendar.getInstance();
+        c.setTime(parse(date));
+        long t1 = c.getTime().getTime();
+        return (int) (t / 1000 - t1 / 1000) / 3600;
+    }
+
+    /**
+     * 按默认格式的字符串距离今天的小时
+     *
+     * @param date 日期字符串
+     * @return
+     */
+    public static int countHours(Date date) {
+        long t = Calendar.getInstance().getTime().getTime();
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        long t1 = c.getTime().getTime();
+        return (int) (t / 1000 - t1 / 1000) / 3600;
+    }
+
+
+    /**
+     * 按默认格式的字符串距离今天的分钟
+     *
+     * @param date 日期字符串
+     * @return
+     */
+    public static int countMinutes(String date) {
+        long t = Calendar.getInstance().getTime().getTime();
+        Calendar c = Calendar.getInstance();
+        c.setTime(parse(date));
+        long t1 = c.getTime().getTime();
+        return (int) (t / 1000 - t1 / 1000) / 60;
+    }
+
+    /**
+     * 按默认格式的字符串距离今天的分钟
+     *
+     * @param date 日期字符串
+     * @return
+     */
+    public static int countMinutes(Date date) {
+        long t = Calendar.getInstance().getTime().getTime();
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        long t1 = c.getTime().getTime();
+        return (int) (t / 1000 - t1 / 1000) / 60;
+    }
+
     /**
      * 按用户格式字符串距离今天的天数
      *
@@ -295,6 +360,52 @@ public class DateTimeUtils {
     }
 
     /**
+     * 按用户格式字符串距离今天的天数
+     *
+     * @param date 日期字符串
+     * @return
+     */
+    public static int countDays(Date date) {
+        long t = Calendar.getInstance().getTime().getTime();
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        long t1 = c.getTime().getTime();
+        return (int) (t / 1000 - t1 / 1000) / 3600 / 24;
+    }
+
+    /**
+     * 按用户格式字符串距离今天的小时
+     *
+     * @param date   日期字符串
+     * @param format 日期格式
+     * @return
+     */
+    public static int countHours(String date, String format) {
+        long t = Calendar.getInstance().getTime().getTime();
+        Calendar c = Calendar.getInstance();
+        c.setTime(parse(date, format));
+        long t1 = c.getTime().getTime();
+        return (int) (t / 1000 - t1 / 1000) / 3600;
+    }
+
+
+    /**
+     * 按用户格式字符串距离今天的分钟
+     *
+     * @param date   日期字符串
+     * @param format 日期格式
+     * @return
+     */
+    public static int countMinutes(String date, String format) {
+        long t = Calendar.getInstance().getTime().getTime();
+        Calendar c = Calendar.getInstance();
+        c.setTime(parse(date, format));
+        long t1 = c.getTime().getTime();
+        return (int) (t / 1000 - t1 / 1000) / 60;
+    }
+
+
+    /**
      * 按用户给的时间戳获取预设格式的时间
      *
      * @param date    时间戳
@@ -308,14 +419,77 @@ public class DateTimeUtils {
         return format.format(dates);
     }
 
+
+    /**
+     * 获取中文年月日
+     *
+     * @param date 时间戳
+     * @return
+     */
+    public static String getCNTime(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        return getYearNum("" + year) +
+                "年" +
+                getMonthNum(month) +
+                "月" +
+                getDayNum(day) +
+                "日";
+    }
+
+    public static String getYearNum(String numStr) {
+        StringBuilder buffer = new StringBuilder();
+        int length = numStr.length();
+        for (int i = 0; i < length; i++) {
+            char c = numStr.charAt(i);
+            int num = Integer.parseInt(c + "");
+            buffer.append(CN_NUM[num]);
+        }
+        return buffer.toString();
+    }
+
+    public static String getMonthNum(int num) {
+        StringBuilder buffer = new StringBuilder();
+        int ten = num / 10;
+        int bits = num % 10;
+        if (ten > 0) {
+            buffer.append(CN_NUM[ten]);
+            buffer.append(CN_NUM[10]);
+        }
+        if (bits > 0) {
+            buffer.append(CN_NUM[bits]);
+        }
+        return buffer.toString();
+    }
+
+    public static String getDayNum(int num) {
+        StringBuilder buffer = new StringBuilder();
+        int ten = num / 10;
+        int bits = num % 10;
+        if (ten > 0) {
+            buffer.append(CN_NUM[ten]);
+            buffer.append(CN_NUM[10]);
+        }
+        if (bits > 0) {
+            buffer.append(CN_NUM[bits]);
+        }
+        return buffer.toString();
+    }
+
+
     /**
      * 格式化时间 判断一个日期 是否为 今天、昨天
      *
      * @param time
      * @return
      */
-    public static String formatDateTime(String time) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    public static String formatDateTime(String time, String pattern) {
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
         if (time == null || "".equals(time)) {
             return "";
         }
@@ -350,13 +524,12 @@ public class DateTimeUtils {
         current.setTime(date);
 
         if (current.after(today)) {
-            return "今天 " + time.split(" ")[1];
+            return "今天 " + time;
         } else if (current.before(today) && current.after(yesterday)) {
 
-            return "昨天 " + time.split(" ")[1];
+            return "昨天 " + time;
         } else {
-            int index = time.indexOf(" ");
-            return time.substring(0, index);
+            return time;
         }
     }
 
